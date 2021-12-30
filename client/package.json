@@ -23,6 +23,7 @@
     "react-router-dom": "^6.1.1",
     "react-scripts": "4.0.3",
     "sass": "^1.44.0",
+    "swiper": "^7.4.1",
     "web-vitals": "^1.0.1"
   },
   "scripts": {

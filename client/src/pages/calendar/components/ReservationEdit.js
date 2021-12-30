@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import calendarSelectors from "../../../redux/calendar/calendarSelectors";
-import { TextField, Box, CardActions, Button, Typography } from "@mui/material";
+import { TextField, Box, CardActions, Button, Typography, FormControlLabel, Checkbox } from "@mui/material";
 import calendarOperations from "../../../redux/calendar/calendarOperations";
 import "react-day-picker/lib/style.css";
 import RangePicker from "./RangePicker";
@@ -58,23 +58,10 @@ const ReservationsEdit = ({
 
   return (
     <Box className="reservation-edit-form">
-      <Typography variant="h4" component="h4" sx={{ marginBottom: 20 + "px" }}>
+      <Typography variant="h5" component="h5" sx={{ marginBottom: 20 + "px" }}>
         Изменение резервации
       </Typography>
       <RangePicker rangeDates={rangeDates} />
-      <TextField
-        required
-        id="price"
-        label="Цена за ночь"
-        name="roomPrice"
-        placeholder="1300"
-        onChange={changeHandler}
-        value={form.roomPrice}
-        type="number"
-        margin="normal"
-        size="small"
-        InputLabelProps={{ shrink: true }}
-      />
 
       <TextField
         required
@@ -130,6 +117,22 @@ const ReservationsEdit = ({
         minRows={4}
         InputLabelProps={{ shrink: true }}
       />
+            <Box className="price-and-payment">
+            <TextField
+              required
+              id="price"
+              label="Цена за ночь"
+              name="roomPrice"
+              placeholder="1300"
+              onChange={changeHandler}
+              value={form.roomPrice}
+              type="number"
+              margin="normal"
+              size="small"
+              InputLabelProps={{ shrink: true }}
+            />
+            <FormControlLabel className="prepayment-checkbox" control={<Checkbox name="paymentStatus" onChange={changeHandler}/>} label="Предоплата" />
+            </Box>
       <CardActions className="card-actions">
         <Button variant="text" onClick={handleDelete} color="error">
           Удалить

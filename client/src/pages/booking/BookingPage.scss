@@ -26,3 +26,37 @@
       border-top-right-radius: 50% !important;
       border-bottom-right-radius: 50% !important;
     }
+    .view-container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+    .booking-dates-line {
+      display: flex;
+      align-items: center;
+      padding: 16px;
+      border: 1px solid #dddddd;
+      border-radius: 12px;
+      .dates-container {
+        position: relative;
+        .dates-calendar {
+          display: none;
+          position: absolute;
+          width: 540px;
+          top: 4rem;
+          padding: 16px;
+          border: 1px solid rgb(221, 221, 221);
+          border-radius: 12px;
+          box-shadow: rgb(0,0,0,.12) 0px 6px 16px;
+          background-color: white;
+      }
+      .primary-btn {
+        margin-left: 16px;
+      }
+      &.opened {
+        .dates-calendar {
+          display: block;
+        }
+      }
+    }
+  }

@@ -1,10 +1,12 @@
 import React from "react";
 import { Routes, Route, Navigate} from "react-router-dom";
 import CalendarPage from "./pages/calendar/CalendarPage"
-import BookingPage from "./pages/BookingPage";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
+import AllRooms from "./pages/booking/AllRooms";
+import Room from "./pages/booking/components/RoomDetails/RoomDetails";
+import Checkout from "./pages/booking/components/Checkout";
 
 const UseRoutes = ({isAuthenticated}) => {
 
@@ -25,8 +27,9 @@ const UseRoutes = ({isAuthenticated}) => {
   return (
     <React.Fragment>
   <Routes>
-    <Route path="/" element={<Dashboard/>}/>
-    <Route path="/booking/:id" element={<BookingPage/>}/>
+    <Route path="/" element={<AllRooms/>}/>
+    <Route path="/room/:id" element={<Room/>}/>
+    <Route path="/checkout" element={<Checkout/>}/>
     <Route path="/login" exact element={<Login/>}/>
     <Route path="/register" exact element={<Register/>}/>
 </Routes>

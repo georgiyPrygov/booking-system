@@ -8,20 +8,17 @@ import calendarOperations from "../../redux/calendar/calendarOperations";
 import calendarSelectors from "../../redux/calendar/calendarSelectors";
 import { useParams } from "react-router";
 import RoomSelect from "../../components/RoomSelect/RoomSelect";
-import { Container, Box, Typography } from "@mui/material";
+import { Container, Box} from "@mui/material";
 import "./CalendarPage.scss";
 import snackbarOperations from "../../redux/snackbar/snackbarOperations";
 import ReservationsList from "./components/ReservationsList";
 import ReservationAdd from "./components/ReservationAdd";
+require('moment/locale/ru.js')
 
 const CalendarPage = ({
   userId,
   getReservations,
   reservations,
-  addReservation,
-  deleteReservation,
-  snackbarRun,
-  setIsOpened,
   setRange,
   range,
   reservationsState,
@@ -33,7 +30,7 @@ const CalendarPage = ({
   const [availableAmount, setAvailableAmount] = useState(0);
 
   useEffect(() => {
-    getReservations({ userId, roomType: id });
+    getReservations({ userId, roomType: id, isAdmin: true});
     switch (id) {
       case "standard":
         setAvailableAmount(1);
@@ -70,6 +67,36 @@ const CalendarPage = ({
     // }
   };
 
+  const eventProps = function (event) {
+    let backgroundColor = "#1976d2";
+    if (event.paymentStatus === false) {
+      backgroundColor = "#eb0000";
+    }
+    let style = {
+      backgroundColor: backgroundColor,
+    };
+    return {
+      style: style,
+    };
+  };
+  const calendarStyle = (day) => {
+    let today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let backgroundColor;
+    if (day > today && day !== today) {
+      backgroundColor = "white";
+    }
+    if (day < today) {
+      backgroundColor = "#e5e5e5";
+    }
+    return {
+      style: {
+        backgroundColor: backgroundColor,
+      },
+    };
+  };
+
   return (
     <Container>
       <Box className="calendar-top-block">
@@ -83,8 +110,10 @@ const CalendarPage = ({
           localizer={localizer}
           events={reservations}
           defaultView={Views.MONTH}
-          onSelectEvent={null}
+          onSelectEvent={handleSelect}
           onSelectSlot={handleSelect}
+          eventPropGetter={eventProps}
+          dayPropGetter={calendarStyle}
         />
         <div className="calendar-sidebar">
           {range !== null && (

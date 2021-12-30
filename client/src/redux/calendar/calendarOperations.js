@@ -2,9 +2,9 @@ import axios from 'axios'
 import calendarActions from "./calendarActions";
 import snackbarActions from '../snackbar/snackbarActions';
 
-const getReservations = ({userId, roomType}) => dispatch => {
+const getReservations = ({userId, roomType, isAdmin}) => dispatch => {
     axios
-    .get("/api/reservations", {params: {userId, roomType}})
+    .get("/api/reservations", {params: {userId, roomType, isAdmin}})
     .then((response) => {
       dispatch(calendarActions.getReservations(response.data));
     })
@@ -60,11 +60,15 @@ const setRange = ({start, end}) => dispatch => {
 const setEditedRange = (data) => dispatch => {
   dispatch(calendarActions.setEditedRange(data)); 
 }
+const setBookingRange = (data) => dispatch => {
+  dispatch(calendarActions.setBookingRange(data)); 
+}
 export default {
     getReservations,
     addReservation,
     deleteReservation,
     updateReservation,
     setEditedRange,
+    setBookingRange,
     setRange
 }

@@ -32,8 +32,9 @@
     rgba(0, 0, 0, 0.14) 0px 24px 38px 3px, rgba(0, 0, 0, 0.12) 0px 9px 46px 8px;
   padding: 32px;
   overflow-y: auto;
-  height: calc(100% - 64px);
-  margin: 32px 0;
+  max-height: 550px;
+  height: 100%;
+  box-sizing: border-box;
   .close {
     position: absolute;
     top: 0;
@@ -44,7 +45,55 @@
     display: flex;
     justify-content: space-between;
   }
+  .price-and-payment {
+    display: flex;
+    align-items: center;
+    .prepayment-checkbox {
+      margin: 16px 0 8px 16px;
+    }
+  }
 }
 .secondary-descr {
   color: rgba(0, 0, 0, 0.6);
+}
+.rbc-selected-cell {
+  background-color: #eaf6ff !important;
+}
+.rbc-ellipsis, .rbc-event-label, .rbc-row-segment .rbc-event-content, .rbc-show-more {
+    font-size: 16px;
+}
+.rbc-row-segment {
+    padding-bottom: 5px;
+}
+.rbc-toolbar {
+    justify-content: flex-end;
+    flex-flow: row-reverse;
+    margin-bottom: 16px;
+    .rbc-btn-group {
+        button {
+            &:nth-child(1) {
+                display: none;
+            }
+        }
+        &:last-child {
+            display: none;
+        }
+    }
+    .rbc-toolbar-label {
+        flex-grow: unset;
+        padding: 0 10px 0 0;
+        text-align: left;
+        font-weight: bold;
+        text-transform: capitalize;
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .calendar-grid {
+        grid-template-columns: 1fr;
+    }
+    .modal-content {
+        max-height: unset;
+    }
 }

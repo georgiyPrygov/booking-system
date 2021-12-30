@@ -4,9 +4,10 @@ import actions from "./calendarActions";
 const calendarState = {
   reservations: [],
   disabledDates: [],
-  range: null,
+  range: {start: new Date(), end: new Date()},
   reservationsState: 0,
-  editedRange: {from:null, to: null}
+  editedRange: {from:null, to: null},
+  bookingRange: {from:null, to: null},
 };
 
 const calendarData = createReducer(calendarState, {
@@ -33,6 +34,7 @@ const calendarData = createReducer(calendarState, {
   }),
   [actions.setRange]: (state, { payload }) => ({ ...state, range: payload }),
   [actions.setEditedRange]: (state, { payload }) => ({ ...state, editedRange: payload }),
+  [actions.setBookingRange]: (state, { payload }) => ({ ...state, bookingRange: payload }),
 });
 
 export default combineReducers({

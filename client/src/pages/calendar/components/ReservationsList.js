@@ -11,6 +11,8 @@ import {
   Icon,
   Modal,
   Box,
+  ListItemAvatar,
+  Avatar,
 } from "@mui/material";
 import ReservationEdit from "./ReservationEdit";
 
@@ -52,12 +54,18 @@ const ReservationsList = ({ range, reservations }) => {
                   <IconButton
                     edge="end"
                     aria-label="edit"
+                    color="primary"
                     onClick={() => startEdit(item._id)}
                   >
                     <Icon>edit</Icon>
                   </IconButton>
                 }
               >
+                                  <ListItemAvatar>
+                    <Avatar>
+                    <Icon>person</Icon>
+                    </Avatar>
+                  </ListItemAvatar>
                 <ListItemText
                   primary={item.title}
                   secondary={`${moment(item.start).format(

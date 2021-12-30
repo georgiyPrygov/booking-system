@@ -17,7 +17,7 @@ import calendarOperations from "../../../redux/calendar/calendarOperations";
 import authSelectors from "../../../redux/auth/authSelectors";
 import moment from "moment";
 
-const ReservationAdd = ({
+const Checkout = ({
   addReservation,
   range,
   userId,
@@ -199,4 +199,4 @@ const mapDispatchToProps = (dispatch) => ({
   addReservation: (reservation) =>
     dispatch(calendarOperations.addReservation(reservation)),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(ReservationAdd);
+export default connect(mapStateToProps, mapDispatchToProps)(Checkout);
