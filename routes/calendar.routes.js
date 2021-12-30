@@ -16,7 +16,7 @@ router.post(
   ],
   async (req, res) => {
     try {
-      const { name, email, phone, descr, start, end, title, owner, roomType, roomPrice} = req.body;
+      const { name, email, phone, descr, start, end, title, owner, roomType, roomPrice, paymentStatus} = req.body;
 
       const errors = validationResult(req);
 
@@ -28,14 +28,14 @@ router.post(
             message: "некоректные данные при создании бронирования",
           });
       }
-      const existing = await Reservation.find({start});
-      console.log('existing events', existing.length)
-      if (existing.length > 3) {
-        return res
-          .status(400)
-          .json({ message: "На эти даты нету свободных номеров" });
-      }
-      const reservation = new Reservation({ name, email, phone, descr, start, end, title, owner, roomType, roomPrice});
+      // const existing = await Reservation.find({start});
+      // console.log('existing events', existing.length)
+      // if (existing.length > 3) {
+      //   return res
+      //     .status(400)
+      //     .json({ message: "На эти даты нету свободных номеров" });
+      // }
+      const reservation = new Reservation({ name, email, phone, descr, start, end, title, owner, roomType, roomPrice, paymentStatus});
 
 
       await reservation.save();
@@ -50,10 +50,21 @@ router.post(
 router.get(
   "/",
   async (req, res) => {
-    try {  
-      const reservations = await Reservation.find({owner: req.query.userId,roomType: req.query.roomType}).sort({start: -1});
+    try {
+      let reservations = [];  
+      if(req.query.roomType) {
+        reservations = await Reservation.find({owner: req.query.userId,roomType: req.query.roomType}).sort({start: -1});
+      } else {
+        reservations = await Reservation.find({owner: req.query.userId}).sort({start: -1});
+      }
 
-      res.json(reservations);
+      if(req.query.isAdmin === 'true') {
+        res.json(reservations);
+      } else {
+        const filtered = reservations.map(item => ({start: item.start, end: item.end, roomPrice: item.roomPrice, roomType: item.roomType}))
+        res.json(filtered);
+      }
+
     } catch (error) {
       res.status(500).json({ message: "что-то пошло не так" });
     }

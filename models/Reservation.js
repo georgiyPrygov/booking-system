@@ -34,6 +34,10 @@ const schema = new Schema({
         type: Number,
         required: true
     },
+    paymentStatus: {
+        type: Boolean,
+        required: true
+    },
     owner: {type: Types.ObjectId, ref: 'User'}
 })
 

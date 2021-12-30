@@ -10,7 +10,10 @@ app.use('/api/auth', require('./routes/auth.routes'))
 app.use('/api/reservations', require('./routes/calendar.routes'))
 
 if(process.env.NODE_ENV === 'production') {
-    app.use('/',express.static)
+    app.use('/', express.static(path.join(__dirname, 'client', 'build')))
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    })
 }
 
 const PORT  = config.get('port') || 5000;
