@@ -18,10 +18,10 @@ const RoomsList = ({ availableRooms, rangeState }) => {
     <>
       {availableRooms !== null && rangeState.to !== null && (
         <div className="available-rooms-list">
-          {roomsArray.map((item) => {
-            return <>
+          {roomsArray.length !== 0 && roomsArray.map((item, idx) => {
+            return <div className="room-item-block" key={idx}>
              {item.value > 0 && <RoomItem roomType={item.property} rangeState={rangeState}/>}
-            </>;
+            </div>;
           })}
         </div>
       )}

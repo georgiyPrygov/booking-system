@@ -9,6 +9,7 @@ const updateReservation = createAction('calendar/updateReservation');
 const updateReservationsCount = createAction('calendar/updateReservationsCount');
 const setEditedRange = createAction('calendar/setEditedRange');
 const setBookingRange = createAction('calendar/setBookingRange');
+const setGuests = createAction('calendar/setGuests');
 
 const setRange = createAction('calendar/setRange');
 
@@ -23,5 +24,6 @@ export default {
     updateReservationsCount,
     setEditedRange,
     setBookingRange,
+    setGuests,
     setRange
 }

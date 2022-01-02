@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import DayPicker, { DateUtils } from "react-day-picker";
 import "react-day-picker/lib/style.css";
@@ -13,15 +13,19 @@ import roomsData from "../../utils/roomsData";
 import access from "../../utils/calendarAccess";
 import RoomsList from "./components/RoomsList/RoomsList";
 import { Button } from "@mui/material";
+import GuestsCounter from "./components/GuestsCounter";
 
 const AllRooms = ({
   reservations,
   getReservations,
   isAuthenticated,
   setBookingRange,
-  bookingRange
+  bookingRange,
+  guests
 }) => {
   const { id } = useParams();
+  const datesPicker = useRef();
+  const guestsPicker = useRef();
   const [rangeState, setRange] = useState({ from: null, to: null });
   const [nextDisabled, setNextDisabled] = useState(null);
   const [disabledDays, setDisabledDays] = useState(null);
@@ -32,6 +36,7 @@ const AllRooms = ({
   const [nightsCount, setNightsCount] = useState(0);
   const [availableRooms, setAvailableRooms] = useState(null);
   const [calendarState, setCalendarState] = useState(false);
+  const [guestsState, setGuestsState] = useState(false)
 
   const modifiers = { start: rangeState.from, end: rangeState.to };
 
@@ -45,16 +50,16 @@ const AllRooms = ({
 
     switch (id) {
       case "standard":
-        setAvailableAmount(roomsData.STANDARD.amount);
-        setRoomPrice(roomsData.STANDARD.price);
+        setAvailableAmount(roomsData.standard.amount);
+        setRoomPrice(roomsData.standard.price);
         break;
       case "luxe":
-        setAvailableAmount(roomsData.LUXE.amount);
-        setRoomPrice(roomsData.LUXE.price);
+        setAvailableAmount(roomsData.luxe.amount);
+        setRoomPrice(roomsData.luxe.price);
         break;
       case "deluxe":
-        setAvailableAmount(roomsData.DELUXE.amount);
-        setRoomPrice(roomsData.DELUXE.price);
+        setAvailableAmount(roomsData.deluxe.amount);
+        setRoomPrice(roomsData.deluxe.price);
         break;
       default:
         setAvailableAmount(6);
@@ -115,9 +120,9 @@ const AllRooms = ({
       });
       console.log(getRoomsFormDates);
       const openedRooms = {
-        standard: roomsData.STANDARD.amount,
-        luxe: roomsData.LUXE.amount,
-        deluxe: roomsData.DELUXE.amount,
+        standard: roomsData.standard.amount,
+        luxe: roomsData.luxe.amount,
+        deluxe: roomsData.deluxe.amount,
       };
       for (let j = 0; j < getRoomsFormDates.length; j++) {
         if (
@@ -154,6 +159,30 @@ const AllRooms = ({
     setRange(bookingRange)
   },[bookingRange])
 
+  useEffect(() => {
+    const checkIfClickedOutside = e => {
+      if(datesPicker.current) {
+          if(calendarState && !datesPicker.current.contains(e.target)) {
+            setCalendarState(false)
+            setGuestsState(false)
+          }
+      }
+      if(guestsPicker.current) {
+        if(guestsState && !guestsPicker.current.contains(e.target)) {
+          setCalendarState(false)
+          setGuestsState(false)
+        }
+      }
+    }
+
+    document.addEventListener("mousedown", checkIfClickedOutside)
+
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener("mousedown", checkIfClickedOutside)
+    }
+  }, [calendarState, guestsState])
+
   const handleDayClick = (day, { disabled }) => {
     day = new Date(day.getFullYear(), day.getMonth(), day.getDate());
     if (disabled) {
@@ -183,11 +212,15 @@ const AllRooms = ({
     <div className="view-container">
       {isLoaded ? (
         <>
+        <div className="booking-main-title">
+          Перевірте доступність номерів</div>
           <div className="booking-dates-line">
+            <div className="choose-dates-label">
             Виберіть дати
-            <div className={`dates-container ${calendarState ? "opened" : ""}`}>
+            </div>
+            <div className={`dates-container ${calendarState ? "opened" : ""}`} ref={datesPicker}>
               <Button
-                variant="contained"
+                variant={rangeState.to !== null ? 'contained' : 'outlined'}
                 className="primary-btn"
                 onClick={() =>
                   setCalendarState((calendarState) => !calendarState)
@@ -213,6 +246,28 @@ const AllRooms = ({
                   modifiers={modifiers}
                   onDayClick={handleDayClick}
                 />
+                <div className="actions-block">
+                   <Button variant="text" color="error" onClick={() => setCalendarState(false)}>Закрити</Button>
+                   <Button variant="text" onClick={() => setCalendarState(false)}>Підтвердити</Button>
+                </div>
+              </div>
+            </div>
+            <div className={`guests-container ${guestsState ? "opened" : ""}`} ref={guestsPicker}>
+              <Button
+                variant="contained"
+                className="primary-btn"
+                onClick={() =>
+                  setGuestsState((guestsState) => !guestsState)
+                }
+              >
+                {((guests.adult + guests.children) === 1) ? `${guests.adult + guests.children} гость`: `${guests.adult + guests.children} гостей` }
+              </Button>
+              <div className="guests-calendar">
+                  <GuestsCounter/>
+                  <div className="actions-block">
+                   <Button variant="text" color="error" onClick={() => setGuestsState(false)}>Закрити</Button>
+                   <Button variant="text" onClick={() => setGuestsState(false)}>Підтвердити</Button>
+                </div>
               </div>
             </div>
           </div>
@@ -230,6 +285,7 @@ const mapStateToProps = (state) => ({
   reservations: calendarSelectors.getReservations(state),
   bookingRange: calendarSelectors.getBookingRange(state),
   isAuthenticated: authSelectors.getIsAuthenticated(state),
+  guests: calendarSelectors.getGuests(state),
 });
 const mapDispatchToProps = (dispatch) => ({
   getReservations: (userId) =>

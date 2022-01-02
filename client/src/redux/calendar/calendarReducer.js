@@ -8,6 +8,7 @@ const calendarState = {
   reservationsState: 0,
   editedRange: {from:null, to: null},
   bookingRange: {from:null, to: null},
+  guests: {adult: 2, children: 0}
 };
 
 const calendarData = createReducer(calendarState, {
@@ -35,6 +36,7 @@ const calendarData = createReducer(calendarState, {
   [actions.setRange]: (state, { payload }) => ({ ...state, range: payload }),
   [actions.setEditedRange]: (state, { payload }) => ({ ...state, editedRange: payload }),
   [actions.setBookingRange]: (state, { payload }) => ({ ...state, bookingRange: payload }),
+  [actions.setGuests]: (state, { payload }) => ({ ...state, guests: payload }),
 });
 
 export default combineReducers({

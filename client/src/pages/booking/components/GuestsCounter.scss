@@ -1,0 +1,28 @@
+.guests-counter-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    padding: 0 8px;
+    button {
+        padding: 0;
+        span {
+            border: 1px solid rgba(0, 0, 0, 0.54);
+            padding: 8px;
+            border-radius: 50%;
+        }
+    }
+    .guests-value {
+        margin: 0 16px;
+    }
+    .guests-label {
+        min-width: 74px;
+        margin-right: 16px;
+    }
+}
+@media (max-width: 800px) {
+    .guests-counter-item {
+        .guests-label {
+            flex: 1;
+        }
+    }
+}

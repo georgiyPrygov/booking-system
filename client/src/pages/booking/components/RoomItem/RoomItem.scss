@@ -1,0 +1,123 @@
+.room-list-item {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  padding: 24px 0;
+  border-bottom: 1px solid #ddd;
+  .slider {
+    max-width: 300px;
+    max-height: 200px;
+    background-color: #fafafa;
+    flex: 0 0 300px;
+    height: 100%;
+    width: 100%;
+    border-radius: 12px;
+    img {
+      width: 100%;
+    }
+    .swiper {
+      height: 200px;
+      border-radius: 12px;
+      .swiper-wrapper {
+        overflow: hidden;
+      }
+      .swiper-button-next,
+      .swiper-button-prev {
+        margin: 0;
+        width: 20px;
+        height: 20px;
+        background-color: white;
+        padding: 6px;
+        border-radius: 50%;
+        color: black;
+        top: calc(50% - 10px);
+        box-shadow: transparent 0px 0px 0px 1px, transparent 0px 0px 0px 4px,
+          rgb(0, 0, 0, 0.18) 0px 2px 4px;
+        &:after {
+          font-size: 14px;
+        }
+      }
+      .swiper-pagination-bullet {
+        background: white;
+        opacity: 0.5;
+        &.swiper-pagination-bullet-active {
+          background-color: white;
+          opacity: 1;
+        }
+      }
+    }
+  }
+  .room-item-content {
+    margin-left: 16px;
+    flex: 1;
+    height: 200px;
+    display: flex;
+    flex-flow: column;
+    .category {
+      color: #717171;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    .name {
+      font-size: 18px;
+      position: relative;
+      padding-bottom: 12px;
+      margin-bottom: 10px;
+      font-weight: 500;
+      &:after {
+        content: "";
+        width: 30px;
+        height: 2px;
+        background: #ddd;
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+      }
+    }
+    .details {
+      color: #717171;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    .price-block {
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      .inner {
+        font-size: 18px;
+      }
+    }
+  }
+  .see-more {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    cursor: pointer;
+  }
+}
+@media (max-width: 575px) {
+  .room-list-item {
+    display: grid;
+    grid-gap: 10px;
+    .slider {
+      flex: 0 0 100%;
+      overflow: hidden;
+      max-width: unset;
+      max-height: 300px;
+      .swiper {
+          height: auto;
+      }
+    }
+    .room-item-content {
+        margin-left: 0;
+        height: auto;
+        .price-block {
+            margin-top: 24px;
+        }
+    }
+  }
+}
