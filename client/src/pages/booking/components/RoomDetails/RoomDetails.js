@@ -46,16 +46,16 @@ const RoomDetails = ({
 
     switch (id) {
       case "standard":
-        setAvailableAmount(roomsData.STANDARD.amount);
-        setRoomPrice(roomsData.STANDARD.price);
+        setAvailableAmount(roomsData.standard.amount);
+        setRoomPrice(roomsData.standard.price);
         break;
       case "luxe":
-        setAvailableAmount(roomsData.LUXE.amount);
-        setRoomPrice(roomsData.LUXE.price);
+        setAvailableAmount(roomsData.luxe.amount);
+        setRoomPrice(roomsData.luxe.price);
         break;
       case "deluxe":
-        setAvailableAmount(roomsData.DELUXE.amount);
-        setRoomPrice(roomsData.DELUXE.price);
+        setAvailableAmount(roomsData.deluxe.amount);
+        setRoomPrice(roomsData.deluxe.price);
         break;
     }
   }, [isAuthenticated, getReservations, id]);
