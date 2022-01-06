@@ -6,25 +6,24 @@ import calendarOperations from "../../../redux/calendar/calendarOperations";
 import './GuestsCounter.scss';
 
 const GuestsCounter = ({ guests, setGuests }) => {
-  const [guestsAmount, setGuestsAmount] = useState({ adult: 2, children: 0 });
   const incrementCounter = (e) => {
     const name = e.target.getAttribute("name");
-    setGuestsAmount({ ...guestsAmount, [name]: guestsAmount[name] + 1 });
+    setGuests({ ...guests, [name]: guests[name] + 1 });
   };
   const decrementCounter = (e) => {
     const name = e.target.getAttribute("name");
 
-    if( name === 'adult' && guestsAmount.adult !== 1) {
-        setGuestsAmount({ ...guestsAmount, [name]: guestsAmount[name] - 1 });
+    if( name === 'adult' && guests.adult !== 1) {
+        setGuests({ ...guests, [name]: guests[name] - 1 });
     }
-    if( name === 'children' && guestsAmount.children > 0) {
-        setGuestsAmount({ ...guestsAmount, [name]: guestsAmount[name] - 1 });
+    if( name === 'children' && guests.children > 0) {
+        setGuests({ ...guests, [name]: guests[name] - 1 });
     }
   };
 
-  useEffect(() => {
-      setGuests(guestsAmount);
-  }, [setGuests, guestsAmount]);
+//   useEffect(() => {
+//       setGuests(guestsAmount);
+//   }, [setGuests, guestsAmount]);
 
   return (
     <div className="add-guests-counter">

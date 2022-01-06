@@ -18,6 +18,7 @@
     .swiper {
       height: 200px;
       border-radius: 12px;
+      z-index: unset;
       .swiper-wrapper {
         overflow: hidden;
       }
@@ -33,6 +34,7 @@
         top: calc(50% - 10px);
         box-shadow: transparent 0px 0px 0px 1px, transparent 0px 0px 0px 4px,
           rgb(0, 0, 0, 0.18) 0px 2px 4px;
+          z-index: 2;
         &:after {
           font-size: 14px;
         }
@@ -84,7 +86,13 @@
       height: 100%;
       display: flex;
       align-items: flex-end;
-      justify-content: flex-end;
+      justify-content: space-between;
+      .available-rooms {
+        line-height: 21px;
+        font-size: 14px;
+        color: #717171;
+        white-space: nowrap;
+    }
       .inner {
         font-size: 18px;
       }
@@ -97,6 +105,7 @@
     left: 0;
     bottom: 0;
     cursor: pointer;
+    z-index: 1;
   }
 }
 @media (max-width: 575px) {

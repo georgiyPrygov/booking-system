@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import RoomItem from "../RoomItem/RoomItem";
+import { connect } from "react-redux";
+import calendarSelectors from "../../../../redux/calendar/calendarSelectors";
+import RoomItem from "./RoomItem/RoomItem";
 import "./RoomsList.scss";
 
-const RoomsList = ({ availableRooms, rangeState }) => {
+const RoomsList = ({ availableRooms, bookingRange }) => {
   const [filteredRooms, setFilteredRooms] = useState(null);
 
   useEffect(() => {
@@ -16,11 +18,11 @@ const RoomsList = ({ availableRooms, rangeState }) => {
 
   return (
     <>
-      {availableRooms !== null && rangeState.to !== null && (
+      {availableRooms !== null && bookingRange.to !== null && (
         <div className="available-rooms-list">
           {roomsArray.length !== 0 && roomsArray.map((item, idx) => {
             return <div className="room-item-block" key={idx}>
-             {item.value > 0 && <RoomItem roomType={item.property} rangeState={rangeState}/>}
+             {item.value > 0 && <RoomItem roomType={item.property} amountAvailable={item.value}/>}
             </div>;
           })}
         </div>
@@ -28,5 +30,8 @@ const RoomsList = ({ availableRooms, rangeState }) => {
     </>
   );
 };
-
-export default RoomsList;
+const mapStateToProps = (state) => ({
+  bookingRange: calendarSelectors.getBookingRange(state),
+  availableRooms: calendarSelectors.getAvailableRooms(state),
+});
+export default connect(mapStateToProps, null)(RoomsList);

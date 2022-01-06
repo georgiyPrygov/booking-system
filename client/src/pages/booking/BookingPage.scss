@@ -65,7 +65,7 @@
     .guests-calendar {
       display: none;
       position: absolute;
-      top: 4rem;
+      top: 70px;
       padding: 16px;
       border: 1px solid rgb(221, 221, 221);
       border-radius: 12px;
@@ -138,6 +138,11 @@
         width:100%;
         top: 0; 
       }
+    }
+  }
+  .DayPicker {
+    .DayPicker-Months {
+      grid-template-columns: 1fr;
     }
   }
 }

@@ -32,6 +32,7 @@ const UseRoutes = ({isAuthenticated}) => {
     <Route path="/checkout" element={<Checkout/>}/>
     <Route path="/login" exact element={<Login/>}/>
     <Route path="/register" exact element={<Register/>}/>
+    <Route path="/calendar/*" element={<Navigate replace to="/" />} />
 </Routes>
 </React.Fragment>
 );

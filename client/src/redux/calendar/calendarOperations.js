@@ -66,6 +66,15 @@ const setBookingRange = (data) => dispatch => {
 const setGuests = (obj) => dispatch => {
   dispatch(calendarActions.setGuests(obj)); 
 }
+const setAvailableRooms = (obj) => dispatch => {
+  dispatch(calendarActions.setAvailableRooms(obj));
+}
+const setDatePickerState = data => dispatch => {
+  dispatch(calendarActions.setDatePickerState(data))
+}
+const setNightsCount = number => dispatch => {
+  dispatch(calendarActions.setNightsCount(number))
+}
 export default {
     getReservations,
     addReservation,
@@ -74,5 +83,8 @@ export default {
     setEditedRange,
     setBookingRange,
     setGuests,
-    setRange
+    setRange,
+    setAvailableRooms,
+    setDatePickerState,
+    setNightsCount
 }

@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
-import roomsData from "../../../../utils/roomsData";
+import roomsData from "../../../../../utils/roomsData";
 import SwiperCore, {
   Navigation,
   Pagination,
@@ -14,31 +14,8 @@ import "./RoomItem.scss";
 
 SwiperCore.use([Navigation, Pagination, Mousewheel, Keyboard]);
 
-const RoomItem = ({ availableRooms, roomType }) => {
-  const [filteredRooms, setFilteredRooms] = useState(null);
-  const [roomImages, setRoomImages] = useState(null);
+const RoomItem = ({ roomType, amountAvailable }) => {
 
-  // useEffect(() => {
-  //   if (roomType !== null) {
-  //     switch (roomType) {
-  //       case "standard":
-  //         setRoomImages(roomsData.STANDARD.photos);
-  //         break;
-  //       case "luxe":
-  //         setRoomImages(roomsData.LUXE.photos);
-  //         break;
-  //       case "deluxe":
-  //         setRoomImages(roomsData.DELUXE.photos);
-  //         break;
-  //       default:
-  //         setRoomImages(roomsData.STANDARD.photos);
-  //     }
-  //   }
-  // }, [roomType]);
-
-  useEffect(() => {
-    setFilteredRooms(availableRooms);
-  }, [availableRooms]);
 
   return (
     <div className="room-list-item">
@@ -67,6 +44,9 @@ const RoomItem = ({ availableRooms, roomType }) => {
         <div className="name">{roomsData[roomType].name}</div>
         <div className="details">{roomsData[roomType].details}</div>
         <div className="price-block">
+          <div className="available-rooms">
+            {`( Доступно ${amountAvailable} )`}
+          </div>
           <div className="inner">
             <b>{roomsData[roomType].price} грн</b> / ніч
           </div>

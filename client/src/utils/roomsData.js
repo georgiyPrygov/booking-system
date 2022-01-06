@@ -3,12 +3,13 @@ const standard = {
     price: 1100,
     category: 'Стандарт',
     name: 'Двохмісний номер з видом на гори',
-    details: '2 гостя · 1 спальня · 1 двухспальне ліжко · 1 санвузол · Wi-Fi · вихід на терассу · вид на гори',
+    details: 'макс. 2 гостя · 1 спальня · 1 двухспальне ліжко · 1 санвузол · Wi-Fi · вихід на терассу · вид на гори',
     slider_photos: [
         require('../assets/img/rooms/standard/standard-one.jpeg').default,
         require('../assets/img/rooms/standard/standard-two.jpeg').default,
         require('../assets/img/rooms/standard/standard-three.jpeg').default,
         require('../assets/img/rooms/standard/standard-four.jpeg').default,
+        require('../assets/img/rooms/standard/standard-five.jpeg').default,
     ]
 }
 const luxe = {
