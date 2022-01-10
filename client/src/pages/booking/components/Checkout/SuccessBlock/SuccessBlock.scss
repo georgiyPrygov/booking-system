@@ -1,43 +1,62 @@
 .success-inner-content {
+  text-align: center;
+  .success-image {
+    margin-bottom: 16px;
+    span {
+      font-size: 80px;
+      color: #60d360;
+    }
+  }
+  .success-text {
+    .title {
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+    .reqs {
+      .item {
+        font-size: 18px;
+        font-weight: 500;
+      }
+    }
+  }
+  .socials-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .descr {
+    font-size: 16px;
+    margin: 24px 0;
+    line-height: 1.5;
+    a {
+      color: #1976d2;
+    }
+    .phone-link {
+      display: block;
+    }
+    .prep-sum {
+      font-weight: 500;
+      white-space: nowrap;
+    }
+  }
+}
+.next-booking {
+    max-width: 300px;
+    margin: auto;
+  a {
+    width: 100%;
+    color: white;
+    background-color: #1976d2;
+    display: block;
     text-align: center;
-    .success-image {
-        margin-bottom: 16px;
-        span {
-            font-size: 80px;
-            color: #60d360;
-        }
+    line-height: 48px;
+    border-radius: 4px;
+    text-decoration: none;
+    margin: 12px 0 24px 0;
+    font-weight: 500;
+    &:hover {
+      filter: brightness(1.1);
     }
-    .success-text {
-        .title {
-            font-size: 24px;
-            font-weight: 500;
-            margin-bottom: 16px;
-        }
-        .reqs {
-            .item {
-                font-size: 18px;
-                font-weight: 500;
-            }
-        }
-    }
-    .socials-block {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .descr {
-        font-size: 16px;
-        margin: 24px 0;
-        line-height: 1.5;
-        a {
-            color: #1976d2;
-        }
-        .phone-link {
-            display: block;
-        }
-        .prep-sum {
-            font-weight: 500;
-            white-space: nowrap;
-        }
-    }
+  }
 }

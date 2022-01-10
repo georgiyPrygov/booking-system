@@ -22,12 +22,14 @@ const Checkout = () => {
 
   return (
     <div className="checkout-container">
-      <div className="checkout-header">
-        <NavLink to={`/room/${id}`}>
-          <Icon>keyboard_arrow_left</Icon>
-        </NavLink>
-        Підтвердження і оплата
-      </div>
+      {formVisible &&
+            <div className="back-to-header">
+            <NavLink to={`/room/${id}`}>
+              <Icon>keyboard_arrow_left</Icon>
+              Назад
+            </NavLink>
+          </div>
+      }
       <div className="checkout-columns-container">
         <div className="checkout-col">
           {formVisible ? (

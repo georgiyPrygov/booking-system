@@ -1,17 +1,14 @@
-.checkout-container {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 48px 30px;
-  .checkout-header {
-    display: flex;
-    align-items: center;
-    font-size: 32px;
-    font-weight: 500;
-    padding-bottom: 48px;
+.back-to-header {
+    padding-bottom: 24px;
     a {
       display: flex;
-      margin-right: 16px;
+      align-items: center;
       border-radius: 50%;
+      font-size: 16px;
+      font-weight: 500;
+      text-transform: uppercase;
+      color:#717171;
+      text-decoration: none;
       span {
         font-size: 30px;
         width: 30px;
@@ -19,12 +16,17 @@
         flex: 0 0 30px;
         color: #717171;
         border-radius: 50%;
+        margin-right: 8px;
         &:hover {
             background-color: rgba(0,0,0,.05);
         }
       }
     }
   }
+.checkout-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 48px 30px;
   .checkout-col {
     display: grid;
     grid-gap: 48px;

@@ -1,6 +1,6 @@
 import { Icon } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { NavLink, useSearchParams } from "react-router-dom";
 import './SuccessBlock.scss';
 import facebook from '../../../../../assets/img/icons/facebook.svg';
 import instagram from '../../../../../assets/img/icons/instagram.svg';
@@ -26,7 +26,7 @@ const SuccessBlock = () => {
             </div>
             <div className="success-text">
                 <div className="title">Дякуємо що забронювали номер в нашому шале</div>
-                <div className="descr">Для підтвердження бронювання , потрібно оплатити передплату за 1 ніч проживання <span className="prep-sum">{`UAH ${dayPrice}`}</span> за реквізитами :</div>
+                <div className="descr">Для підтвердження бронювання , потрібно оплатити передплату за 1 ніч проживання <span className="prep-sum">{`UAH ${dayPrice}`}</span> за реквізитами</div>
                 <div className="reqs">
                     <div className="item">Приватбанк 4149 6293 8451 1093 , Пригова Вікторія</div>
                 </div>
@@ -44,6 +44,8 @@ const SuccessBlock = () => {
                 </a>
             </div>
             <div className="descr">Нам також можна написати на <a href="mailto:agorahotel.in.ua@gmail.com">agorahotel.in.ua@gmail.com</a> або зателефонувати за номером <a href="tel:+380971914806" class="phone-link">+38 (097) 191 48 06</a> </div>
+
+            <div className="next-booking"><NavLink to="/">Забронювати ще один номер</NavLink></div>
         </div>
     </div>
   );

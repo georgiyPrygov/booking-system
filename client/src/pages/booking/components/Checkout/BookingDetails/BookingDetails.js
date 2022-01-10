@@ -32,12 +32,12 @@ const BookingDetails = () => {
 
   return (
       <div className="section">
-          <div className="booking-details-top">
-              <div className="room-details-text">
-                  <div className="name">{roomsData[id].name} ( {roomsData[id].category} )</div>
-              </div>
-          </div>
+          <div className="section-title">Деталі бронювання</div>
           <div className="section-content">
+          <div className="section-content__item">
+                <div className="item-subtitle">Номер</div>
+                <div className="item-value">{roomsData[id].name} ( {roomsData[id].category} )</div>
+              </div>
               <div className="section-content__item">
                 <div className="item-subtitle">Дати</div>
                 <div className="item-value">{`${moment(paramsDates.from).format(
