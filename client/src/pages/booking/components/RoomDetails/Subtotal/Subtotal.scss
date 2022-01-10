@@ -65,3 +65,12 @@
     }
 }
 }
+@media(max-width: 800px) {
+    .preview-block {
+        box-shadow: none;
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        padding: 24px 0 0 0;
+    }
+}

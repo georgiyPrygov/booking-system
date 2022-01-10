@@ -22,11 +22,11 @@ const RoomDetails = ({ bookingRange, nightsCount }) => {
       setPickerTitle("Виберіть дати");
     } else if (bookingRange.from !== null && bookingRange.to !== null) {
       if(nightsCount === 1) {
-        setPickerTitle(`${nightsCount} ніч в Agora Chalet`);
+        setPickerTitle(`${nightsCount} ніч в Агора Шале`);
       } else if (nightsCount > 1 && nightsCount < 5) {
-        setPickerTitle(`${nightsCount} ночі в Agora Chalet`);
+        setPickerTitle(`${nightsCount} ночі в Агора Шале`);
       } else if (nightsCount >= 5) {
-        setPickerTitle(`${nightsCount} ночей в Agora Chalet`);
+        setPickerTitle(`${nightsCount} ночей в Агора Шале`);
       }
     }
   }, [bookingRange, nightsCount]);

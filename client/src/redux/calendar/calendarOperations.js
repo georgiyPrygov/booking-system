@@ -75,6 +75,9 @@ const setDatePickerState = data => dispatch => {
 const setNightsCount = number => dispatch => {
   dispatch(calendarActions.setNightsCount(number))
 }
+const setTotalPrice = number => dispatch => {
+  dispatch(calendarActions.setTotalPrice(number))
+}
 export default {
     getReservations,
     addReservation,
@@ -86,5 +89,6 @@ export default {
     setRange,
     setAvailableRooms,
     setDatePickerState,
-    setNightsCount
+    setNightsCount,
+    setTotalPrice,
 }

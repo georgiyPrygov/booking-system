@@ -1,0 +1,108 @@
+.checkout-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 48px 30px;
+  .checkout-header {
+    display: flex;
+    align-items: center;
+    font-size: 32px;
+    font-weight: 500;
+    padding-bottom: 48px;
+    a {
+      display: flex;
+      margin-right: 16px;
+      border-radius: 50%;
+      span {
+        font-size: 30px;
+        width: 30px;
+        height: 30px;
+        flex: 0 0 30px;
+        color: #717171;
+        border-radius: 50%;
+        &:hover {
+            background-color: rgba(0,0,0,.05);
+        }
+      }
+    }
+  }
+  .checkout-col {
+    display: grid;
+    grid-gap: 48px;
+    .section {
+      padding-bottom: 24px;
+      .section-title {
+        font-size: 24px;
+        font-weight: 500;
+        margin-bottom: 24px;
+      }
+      .booking-details-top {
+        margin-bottom: 24px;
+        .category {
+          color: #717171;
+          font-size: 14px;
+          margin-bottom: 4px;
+        }
+        .name {
+          font-size: 24px;
+          font-weight: 500;
+        }
+      }
+      .section-content {
+        display: grid;
+        grid-gap: 24px;
+        .section-content__item {
+          .item-subtitle {
+            font-size: 16px;
+            font-weight: 500;
+          }
+          .item-value {
+            font-size: 16px;
+            color: black;
+            margin-top: 8px;
+            font-weight: 300;
+        }
+        }
+      }
+      .card-actions {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 24px 0 0 0;
+      }
+      &:not(.form) {
+        border-bottom: 1px solid #d2d2d2;
+      }
+    }
+  }
+}
+@media(max-width: 800px) {
+    .checkout-container {
+        padding: 30px;
+        .checkout-header {
+            font-size: 18px;
+        }
+        .checkout-col {
+            .section {
+                .booking-details-top {
+                    .name {
+                        font-size: 22px;
+                    }
+                }
+            }
+        }
+    }
+}
+@media(max-width: 575px) {
+    .checkout-container {
+        .checkout-col {
+            .section {
+                .card-actions {
+                    flex-flow: column;
+                    button {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}

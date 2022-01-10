@@ -20,6 +20,15 @@
         flex: 1;
     }
 }
+.counter-disclaimer {
+    padding-bottom: 16px;
+    color: #717171;
+    font-size: 14px;
+    a {
+        color: #1976d2;
+        line-height: 1.5;
+    }
+}
 @media (max-width: 800px) {
     .guests-counter-item {
         .guests-label {

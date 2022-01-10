@@ -9,6 +9,7 @@ const getGuests = (state) => state.calendar.calendarData.guests;
 const getAvailableRooms = (state) => state.calendar.calendarData.availableRooms;
 const getDatePickerState = (state) => state.calendar.calendarData.datePickerState;
 const getNightsCount = (state) => state.calendar.calendarData.nightsCount;
+const getTotalPrice = (state) => state.calendar.calendarData.totalPrice;
 
   
   export default {
@@ -21,6 +22,7 @@ const getNightsCount = (state) => state.calendar.calendarData.nightsCount;
     getGuests,
     getAvailableRooms,
     getDatePickerState,
-    getNightsCount
+    getNightsCount,
+    getTotalPrice
   };
   

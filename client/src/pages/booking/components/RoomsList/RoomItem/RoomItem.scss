@@ -118,7 +118,8 @@
       max-width: unset;
       max-height: 300px;
       .swiper {
-          height: auto;
+        height: auto;
+        max-height: 280px;
       }
     }
     .room-item-content {
@@ -127,6 +128,15 @@
         .price-block {
             margin-top: 24px;
         }
+    }
+  }
+}
+@media (max-width: 400px) {
+  .room-list-item {
+    .slider {
+      .swiper {
+        height: 200px;
+      }
     }
   }
 }

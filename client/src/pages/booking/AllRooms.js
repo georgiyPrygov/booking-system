@@ -1,32 +1,24 @@
 import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
-import DayPicker, { DateUtils } from "react-day-picker";
 import "react-day-picker/lib/style.css";
-import "./BookingPage.scss";
+import "./AllRooms.scss";
 import calendarOperations from "../../redux/calendar/calendarOperations";
 import calendarSelectors from "../../redux/calendar/calendarSelectors";
-import { useParams } from "react-router";
 import moment from "moment";
-import authSelectors from "../../redux/auth/authSelectors";
-import localization from "../../utils/localization";
-import roomsData from "../../utils/roomsData";
-import access from "../../utils/calendarAccess";
 import RoomsList from "./components/RoomsList/RoomsList";
 import { Button } from "@mui/material";
-import GuestsCounter from "./components/GuestsCounter";
+import GuestsCounter from "./components/GuestsCounter/GuestsCounter";
 import DatePick from "./components/DatePick/DatePick";
 
 const AllRooms = ({
   bookingRange,
   guests,
   datePickerState,
-  setDatePickerState
+  setDatePickerState,
 }) => {
   const datesPicker = useRef();
   const guestsPicker = useRef();
   const [guestsState, setGuestsState] = useState(false);
-
-
 
   useEffect(() => {
     const checkIfClickedOutside = (e) => {
@@ -85,7 +77,10 @@ const AllRooms = ({
                 >
                   Закрити
                 </Button>
-                <Button variant="text" onClick={() => setDatePickerState(false)}>
+                <Button
+                  variant="text"
+                  onClick={() => setDatePickerState(false)}
+                >
                   Підтвердити
                 </Button>
               </div>

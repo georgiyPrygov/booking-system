@@ -11,7 +11,8 @@ const calendarState = {
   guests: {adult: 2, children: 0},
   availableRooms: null,
   datePickerState: false,
-  nightsCount: 0
+  nightsCount: 0,
+  totalPrice: 0
 };
 
 const calendarData = createReducer(calendarState, {
@@ -42,7 +43,8 @@ const calendarData = createReducer(calendarState, {
   [actions.setGuests]: (state, { payload }) => ({ ...state, guests: payload }),
   [actions.setAvailableRooms]: (state, { payload }) => ({ ...state, availableRooms: payload }),
   [actions.setDatePickerState]: (state, { payload }) => ({ ...state, datePickerState: payload }),
-  [actions.setNightsCount] : (state, { payload }) => ({ ...state, nightsCount: payload })
+  [actions.setNightsCount] : (state, { payload }) => ({ ...state, nightsCount: payload }),
+  [actions.setTotalPrice] : (state, { payload }) => ({ ...state, totalPrice: payload })
 });
 
 export default combineReducers({

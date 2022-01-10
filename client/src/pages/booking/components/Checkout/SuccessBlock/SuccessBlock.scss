@@ -1,0 +1,43 @@
+.success-inner-content {
+    text-align: center;
+    .success-image {
+        margin-bottom: 16px;
+        span {
+            font-size: 80px;
+            color: #60d360;
+        }
+    }
+    .success-text {
+        .title {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+        .reqs {
+            .item {
+                font-size: 18px;
+                font-weight: 500;
+            }
+        }
+    }
+    .socials-block {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .descr {
+        font-size: 16px;
+        margin: 24px 0;
+        line-height: 1.5;
+        a {
+            color: #1976d2;
+        }
+        .phone-link {
+            display: block;
+        }
+        .prep-sum {
+            font-weight: 500;
+            white-space: nowrap;
+        }
+    }
+}

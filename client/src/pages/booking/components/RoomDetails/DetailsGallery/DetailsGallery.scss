@@ -1,0 +1,122 @@
+.gallery-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 8px;
+  margin-bottom: 48px;
+  .gallery-image {
+    height: 100%;
+    background-color: #e2e2e2;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      cursor: pointer;
+      &:hover {
+        filter: brightness(0.9);
+      }
+    }
+  }
+  .main-block {
+    img {
+      border-radius: 12px 0 0 12px;
+    }
+  }
+  .secondary-images-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 8px;
+    .gallery-image {
+      max-height: 180px;
+      &:nth-child(2) {
+        img {
+          border-radius: 0 12px 0 0;
+        }
+      }
+      &:last-child {
+        img {
+          border-radius: 0 0 12px 0;
+        }
+      }
+    }
+  }
+  .mobile-images-counter {
+    display: none;
+  }
+}
+.overflow-gallery-modal {
+  position: fixed;
+  z-index: 1234;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-color: white;
+  height: 100%;
+  overflow-y: auto;
+  display: none;
+  .header-actions {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    padding: 0 24px 0 16px;
+    button {
+      color: #717171;
+      border-color: #717171;
+    }
+  }
+  .overflow-gallery-content {
+    margin: 0 auto;
+    max-width: 750px;
+    padding: 24px 8px;
+    grid-template-columns: 1fr;
+    grid-gap: 8px;
+    display: grid;
+    .gallery-image {
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+  &.opened {
+    display: block;
+  }
+}
+@media (max-width: 800px) {
+  .gallery-container {
+    grid-template-columns: 1fr;
+    position: relative;
+    .secondary-images-block {
+      display: none;
+    }
+    .gallery-image {
+      img {
+        border-radius: 0;
+      }
+    }
+    .mobile-images-counter {
+      display: block;
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+  }
+  .overflow-gallery-modal {
+    .header-actions {
+      padding: 0;
+    }
+  }
+}
+@media (max-width: 575px) {
+  .overflow-gallery-modal {
+    .overflow-gallery-content {
+      padding: 0;
+    }
+  }
+}

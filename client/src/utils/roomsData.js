@@ -10,7 +10,8 @@ const standard = {
         require('../assets/img/rooms/standard/standard-three.jpeg').default,
         require('../assets/img/rooms/standard/standard-four.jpeg').default,
         require('../assets/img/rooms/standard/standard-five.jpeg').default,
-    ]
+    ],
+    extra_cost: 0
 }
 const luxe = {
     amount: 2,
@@ -24,7 +25,8 @@ const luxe = {
         require('../assets/img/rooms/luxe/luxe-four.jpeg').default,
         require('../assets/img/rooms/luxe/luxe-six.jpeg').default,
         require('../assets/img/rooms/luxe/luxe-seven.jpeg').default,
-    ]
+    ],
+    extra_cost: 350
 }
 const deluxe = {
     amount: 3,
@@ -42,7 +44,8 @@ const deluxe = {
         require('../assets/img/rooms/deluxe/deluxe-eight.jpeg').default,
         require('../assets/img/rooms/deluxe/deluxe-nine.jpeg').default,
         require('../assets/img/rooms/deluxe/deluxe-ten.jpeg').default,
-    ]
+    ],
+    extra_cost: 350
 }
 
 export default {

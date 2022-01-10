@@ -11,7 +11,7 @@ const auth = require("./middleware/auth.middleware");
 // /api/reservations
 router.post(
   "/",
-  [check("email", "некоректный емейл").isEmail()],
+  [check("email", "Некоректний емейл").isEmail()],
   async (req, res) => {
     try {
       const {
@@ -33,7 +33,7 @@ router.post(
       if (!errors.isEmpty()) {
         return res.status(400).json({
           errors: errors.array(),
-          message: "некоректные данные при создании бронирования",
+          message: "Некоректні данні при створенні бронбвання",
         });
       }
 
@@ -52,9 +52,9 @@ router.post(
       });
 
       await reservation.save();
-      res.status(201).json({ message: "Резервация создана успешно" });
+      res.status(201).json({ message: "Номер успішно заброньовано" });
     } catch (error) {
-      res.status(500).json({ message: "что-то пошло не так попробуйте снова" });
+      res.status(500).json({ message: "Щось пішло не так спробуйте знову" });
     }
   }
 );
@@ -86,16 +86,16 @@ router.get("/", async (req, res) => {
       res.json(filtered);
     }
   } catch (error) {
-    res.status(500).json({ message: "что-то пошло не так" });
+    res.status(500).json({ message: "Щось пішло не так" });
   }
 });
 // /api/reservations
 router.delete("/", async (req, res) => {
   try {
     const reservation = await Reservation.deleteOne({ _id: req.query.id });
-    res.status(201).json({ message: "резервация успешно удалена" });
+    res.status(201).json({ message: "Резервація успішно скасована" });
   } catch (error) {
-    res.status(500).json({ message: "что-то пошло не так" });
+    res.status(500).json({ message: "Щось пішло не так" });
   }
 });
 
@@ -113,7 +113,7 @@ router.patch("/", async (req, res) => {
     );
     res.status(201).json(editedReservation);
   } catch (error) {
-    res.status(500).json({ message: "что-то пошло не так попробуйте снова" });
+    res.status(500).json({ message: "Щось пішло не так спробуйте знову" });
   }
 });
 

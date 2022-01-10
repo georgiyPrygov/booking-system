@@ -13,6 +13,8 @@ const setGuests = createAction('calendar/setGuests');
 const setAvailableRooms = createAction('calendar/setAvailableRooms');
 const setDatePickerState = createAction('calendar/setDatePickerState');
 const setNightsCount = createAction('calendar/setNightsCount');
+const setTotalPrice = createAction('calendar/setTotalPrice');
+
 
 const setRange = createAction('calendar/setRange');
 
@@ -31,5 +33,6 @@ export default {
     setRange,
     setAvailableRooms,
     setDatePickerState,
-    setNightsCount
+    setNightsCount,
+    setTotalPrice
 }

@@ -10,6 +10,7 @@ import access from "../../../../utils/calendarAccess";
 import calendarSelectors from "../../../../redux/calendar/calendarSelectors";
 import authSelectors from "../../../../redux/auth/authSelectors";
 import calendarOperations from "../../../../redux/calendar/calendarOperations";
+import './DatePick.scss'
 
 const DatePick = ({
   reservations,
@@ -89,7 +90,7 @@ const DatePick = ({
             moment(item.end),
             undefined,
             "[]"
-          ) &&
+          ) ||
           moment(rangeState.to).isBetween(
             moment(item.start),
             moment(item.end),
