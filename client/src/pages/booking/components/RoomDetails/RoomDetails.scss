@@ -1,3 +1,28 @@
+.back-to-header {
+    padding-bottom: 24px;
+    a {
+      display: flex;
+      align-items: center;
+      border-radius: 50%;
+      font-size: 16px;
+      font-weight: 500;
+      text-transform: uppercase;
+      color:#717171;
+      text-decoration: none;
+      span {
+        font-size: 30px;
+        width: 30px;
+        height: 30px;
+        flex: 0 0 30px;
+        color: #717171;
+        border-radius: 50%;
+        margin-right: 8px;
+        &:hover {
+            background-color: rgba(0,0,0,.05);
+        }
+      }
+    }
+  }
 .room-details_title {
     margin-bottom: 24px;
     .title {

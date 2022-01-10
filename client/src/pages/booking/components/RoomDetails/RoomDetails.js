@@ -8,6 +8,8 @@ import "./RoomDetails.scss";
 import calendarSelectors from "../../../../redux/calendar/calendarSelectors";
 import { connect } from "react-redux";
 import moment from "moment";
+import { NavLink } from "react-router-dom";
+import { Icon } from "@mui/material";
 
 const RoomDetails = ({ bookingRange, nightsCount }) => {
   const { id } = useParams();
@@ -21,7 +23,7 @@ const RoomDetails = ({ bookingRange, nightsCount }) => {
     if (bookingRange.from === null) {
       setPickerTitle("Виберіть дати");
     } else if (bookingRange.from !== null && bookingRange.to !== null) {
-      if(nightsCount === 1) {
+      if (nightsCount === 1) {
         setPickerTitle(`${nightsCount} ніч в Агора Шале`);
       } else if (nightsCount > 1 && nightsCount < 5) {
         setPickerTitle(`${nightsCount} ночі в Агора Шале`);
@@ -45,6 +47,12 @@ const RoomDetails = ({ bookingRange, nightsCount }) => {
 
   return (
     <div className="view-container">
+      <div className="back-to-header">
+        <NavLink to={`/`}>
+          <Icon>keyboard_arrow_left</Icon>
+          Назад
+        </NavLink>
+      </div>
       <div className="room-details_title">
         <div className="title">{roomsData[id].name}</div>
         <div className="descr">{roomsData[id].details}</div>
