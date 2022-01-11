@@ -142,6 +142,7 @@ const DatePick = ({
     day = new Date(day.getFullYear(), day.getMonth(), day.getDate());
     if (disabled) {
       handleResetClick();
+      setRange({ from: null, to: null });
       return;
     }
 
