@@ -41,7 +41,6 @@ const deluxe = {
         require('../assets/img/rooms/deluxe/deluxe-four.jpeg').default,
         require('../assets/img/rooms/deluxe/deluxe-six.jpeg').default,
         require('../assets/img/rooms/deluxe/deluxe-seven.jpeg').default,
-        require('../assets/img/rooms/deluxe/deluxe-eight.jpeg').default,
         require('../assets/img/rooms/deluxe/deluxe-nine.jpeg').default,
         require('../assets/img/rooms/deluxe/deluxe-ten.jpeg').default,
     ],

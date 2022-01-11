@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import calendarOperations from "../../../../../redux/calendar/calendarOperations";
 import calendarSelectors from "../../../../../redux/calendar/calendarSelectors";
@@ -8,9 +8,22 @@ import roomsData from "../../../../../utils/roomsData";
 import { NavLink } from "react-router-dom";
 import "./Subtotal.scss";
 import GuestsCounter from "../../GuestsCounter/GuestsCounter";
+import DatePick from "../../DatePick/DatePick";
+import { Button } from "@mui/material";
 
-const Subtotal = ({ bookingRange, setNightsCount, nightsCount, guests, totalPrice, setTotalPrice, reservations }) => {
+const Subtotal = ({
+  bookingRange,
+  setNightsCount,
+  nightsCount,
+  guests,
+  totalPrice,
+  setTotalPrice,
+  reservations,
+  datePickerState,
+  setDatePickerState,
+}) => {
   const { id } = useParams();
+  const datesPicker = useRef();
   const [roomPrice, setRoomPrice] = useState(0);
   const [pickerTitle, setPickerTitle] = useState("");
 
@@ -54,19 +67,36 @@ const Subtotal = ({ bookingRange, setNightsCount, nightsCount, guests, totalPric
   }, [bookingRange, nightsCount]);
 
   useEffect(() => {
-    if((guests.adult + guests.children) > 2) {
-      const counted = (roomPrice * nightsCount) + (roomsData[id].extra_cost * nightsCount)
-      setTotalPrice(counted)
+    if (guests.adult + guests.children > 2) {
+      const counted =
+        roomPrice * nightsCount + roomsData[id].extra_cost * nightsCount;
+      setTotalPrice(counted);
     } else {
-      const counted = roomPrice * nightsCount
-      setTotalPrice(counted)
+      const counted = roomPrice * nightsCount;
+      setTotalPrice(counted);
     }
-  },[guests,bookingRange, nightsCount, reservations])
+  }, [guests, bookingRange, nightsCount, reservations]);
+
+  useEffect(() => {
+    const checkIfClickedOutside = (e) => {
+      if (datesPicker.current) {
+        if (datePickerState && !datesPicker.current.contains(e.target)) {
+          setDatePickerState(false);
+        }
+      }
+    };
+
+    document.addEventListener("mousedown", checkIfClickedOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", checkIfClickedOutside);
+    };
+  }, [datePickerState]);
 
   return (
     <div className="subtotal-col">
       <div className="preview-block">
-        <div className="dates">
+        <div className="dates" onClick={() => setDatePickerState(true)}>
           <div className="arrival">
             <div className="label">Дата заїзду</div>
             <div className="value">
@@ -82,17 +112,50 @@ const Subtotal = ({ bookingRange, setNightsCount, nightsCount, guests, totalPric
                 ? moment(bookingRange.to).format("DD.MM.YY")
                 : "Виберіть дату"}
             </div>
+            <div
+              className={`dates-container ${datePickerState ? "opened" : ""}`}
+              ref={datesPicker}
+            >
+              <div className="dates-calendar">
+                <DatePick />
+                <div className="actions-block">
+                  <Button
+                    variant="text"
+                    color="error"
+                    onClick={(e) => {
+                      setDatePickerState(false);
+                      e.stopPropagation();
+                    }}
+                  >
+                    Закрити
+                  </Button>
+                  <Button
+                    variant="text"
+                    onClick={(e) => {
+                      setDatePickerState(false);
+                      e.stopPropagation();
+                    }}
+                  >
+                    Підтвердити
+                  </Button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <GuestsCounter />
-        {bookingRange.to !== null && (guests.adult + guests.children) <= 3 && (
+        {bookingRange.to !== null && guests.adult + guests.children <= 3 && (
           <>
             <div className="disclaimer">Поки що ви ні за що не платите</div>
             <NavLink
               className="checkout-btn"
               to={`/checkout/${id}/?checkin=${moment(bookingRange.from).format(
                 "YYYY-MM-DD"
-              )}&checkout=${moment(bookingRange.to).format("YYYY-MM-DD")}&guests=${guests.adult + guests.children}&nightsCount=${nightsCount}&totalPrice=${totalPrice}`}
+              )}&checkout=${moment(bookingRange.to).format(
+                "YYYY-MM-DD"
+              )}&guests=${
+                guests.adult + guests.children
+              }&nightsCount=${nightsCount}&totalPrice=${totalPrice}`}
             >
               Забронювати
             </NavLink>
@@ -103,14 +166,12 @@ const Subtotal = ({ bookingRange, setNightsCount, nightsCount, guests, totalPric
                 </div>
                 <div className="total">{`UAH ${roomPrice * nightsCount}`}</div>
               </div>
-              {guests.adult + guests.children >= 3 && id !== 'standard' && (
+              {guests.adult + guests.children >= 3 && id !== "standard" && (
                 <div className="pricing-list-item">
                   <div className="subtotal">
                     {`Додаткове місце x ${nightsCount} ${pickerTitle}`}
                   </div>
-                  <div className="total">{`UAH ${
-                    350 * nightsCount
-                  }`}</div>
+                  <div className="total">{`UAH ${350 * nightsCount}`}</div>
                 </div>
               )}
               <div className="pricing-list-item total-item">
@@ -131,11 +192,13 @@ const mapStateToProps = (state) => ({
   guests: calendarSelectors.getGuests(state),
   totalPrice: calendarSelectors.getTotalPrice(state),
   reservations: calendarSelectors.getReservations(state),
+  datePickerState: calendarSelectors.getDatePickerState(state),
 });
 const mapDispatchToProps = (dispatch) => ({
   setNightsCount: (number) =>
     dispatch(calendarOperations.setNightsCount(number)),
-    setTotalPrice: (number) =>
-    dispatch(calendarOperations.setTotalPrice(number)),
+  setTotalPrice: (number) => dispatch(calendarOperations.setTotalPrice(number)),
+  setDatePickerState: (data) =>
+    dispatch(calendarOperations.setDatePickerState(data)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Subtotal);

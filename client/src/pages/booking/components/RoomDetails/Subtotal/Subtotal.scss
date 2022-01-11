@@ -9,9 +9,19 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     margin-bottom: 12px;
+    position: relative;
+    &:hover {
+        border: 1px solid #1976d2;
+        .arrival {
+            &:last-child {
+                border-color: #1976d2;
+            }
+        }
+    }
   }
   .arrival {
     padding: 10px 12px;
+    cursor: pointer;
     .label {
       font-size: 10px;
       text-transform: uppercase;
@@ -24,6 +34,18 @@
     }
     &:last-child {
       border-left: 1px solid #b0b0b0;
+    }
+    .dates-container {
+        &.opened {
+            position: absolute;
+            top: -3px;
+            right: -3px;
+        }
+        .dates-calendar {
+            top: 0;
+            right: 0;
+            left: unset;
+        }
     }
   }
   .guests-counter-item {
@@ -72,5 +94,23 @@
         border-left: 0;
         border-right: 0;
         padding: 24px 0 0 0;
+        .arrival {
+            .dates-container {
+                &.opened {
+                    position: fixed;
+                    top: 0;
+                    bottom: 0;
+                    right: 0;
+                    left: 0;
+                    z-index: 12;
+                    .dates-calendar {
+                        bottom: 0;
+                        display: flex;
+                        flex-flow: column;
+                        justify-content: space-between;
+                    }
+                }
+            }
+        }
     }
 }

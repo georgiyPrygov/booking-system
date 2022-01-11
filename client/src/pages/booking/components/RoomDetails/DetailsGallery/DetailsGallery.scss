@@ -58,7 +58,7 @@
     position: sticky;
     top: 0;
     background-color: white;
-    padding: 0 24px 0 16px;
+    padding: 8px 24px 8px 16px;
     button {
       color: #717171;
       border-color: #717171;
@@ -66,7 +66,7 @@
   }
   .overflow-gallery-content {
     margin: 0 auto;
-    max-width: 750px;
+    max-width: 1024px;
     padding: 24px 8px;
     grid-template-columns: 1fr;
     grid-gap: 8px;
@@ -109,7 +109,7 @@
   }
   .overflow-gallery-modal {
     .header-actions {
-      padding: 0;
+      padding: 8px 0;
     }
   }
 }

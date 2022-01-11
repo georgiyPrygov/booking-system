@@ -135,8 +135,10 @@ const DatePick = ({
   }, [rangeState.to]);
 
   useEffect(() => {
-    setRange(bookingRange);
-  }, []);
+      if(bookingRange.from !== null) {
+        setRange(bookingRange);
+      }
+  }, [bookingRange]);
 
   const handleDayClick = (day, { disabled }) => {
     day = new Date(day.getFullYear(), day.getMonth(), day.getDate());
@@ -180,6 +182,7 @@ const DatePick = ({
         weekdaysLong={localization.WEEKDAYS_LONG}
         weekdaysShort={localization.WEEKDAYS_SHORT}
         numberOfMonths={2}
+        month={bookingRange.to !== null ? bookingRange.from : new Date()}
         fromMonth={new Date()}
         disabledDays={bookedDays !== null ? bookedDays : disabledDays}
         selectedDays={rangeState}
