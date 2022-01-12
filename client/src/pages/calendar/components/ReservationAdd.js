@@ -108,6 +108,7 @@ const ReservationAdd = ({
             ).format("DD.MM.YY")}`}
           </Typography>
           <Box className="reservation-edit-form">
+            <form onSubmit={handleSubmit}>
             <TextField
               required
               id="name"
@@ -180,10 +181,11 @@ const ReservationAdd = ({
             </Box>
             <CardActions className="card-actions">
               <div></div>
-              <Button variant="contained" onClick={handleSubmit}>
+              <Button type="submit" variant="contained">
                 Подтвердить
               </Button>
             </CardActions>
+            </form>
           </Box>
         </Box>
       </Modal>

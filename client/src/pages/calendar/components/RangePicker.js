@@ -6,6 +6,7 @@ import "./RangePicker.scss";
 import calendarSelectors from "../../../redux/calendar/calendarSelectors";
 import { useParams } from "react-router";
 import calendarOperations from "../../../redux/calendar/calendarOperations";
+import localization from "../../../utils/localization";
 
 const RangePicker = ({reservations, rangeDates, setEditedRange}) => {
   const rangeInitialState = { from: null, to: null };
@@ -100,6 +101,9 @@ const RangePicker = ({reservations, rangeDates, setEditedRange}) => {
           <DayPicker
             mode="range"
             numberOfMonths={2}
+            months={localization.MONTHS}
+            weekdaysLong={localization.WEEKDAYS_LONG}
+            weekdaysShort={localization.WEEKDAYS_SHORT}
             fromMonth={new Date()}
             disabledDays={bookedDays !== null ? bookedDays : disabledDays}
             selectedDays={rangeState}
