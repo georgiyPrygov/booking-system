@@ -83,7 +83,9 @@ const BookingForm = ({
           owner: calendarAccess.USER_ID,
           roomType: id,
           roomPrice: roomsData[id].price,
+          guests: searchParams.get("guests"),
           paymentStatus: false,
+          bookingDate: new Date()
         });
         setStateBeforeSumbit(null);
         setIsConfirmed(null);
@@ -95,6 +97,7 @@ const BookingForm = ({
     }
   }, [bookingValid]);
 
+
   useEffect(() => {
     if (bookingValid !== null && isConfirmed === false) {
       setIsOpened(true);
@@ -105,6 +108,7 @@ const BookingForm = ({
       navigate(`/room/${id}`);
     }
   }, [bookingValid, isConfirmed]);
+
 
   const [form, setForm] = useState({
     name: "",
@@ -118,7 +122,22 @@ const BookingForm = ({
     roomType: id,
     roomPrice: roomsData[id].price,
     paymentStatus: false,
+    totalPrice: null,
+    guests: searchParams.get("guests"),
+    nightsCount: null,
+    bookingDate: new Date()
   });
+
+  useEffect(() => {
+    if (paramsDates.to !== null) {
+        const oneDay = 24 * 60 * 60 * 1000;
+  
+        const diffDays = Math.round(
+          Math.abs((paramsDates.from - paramsDates.to) / oneDay)
+        );
+        setForm({ ...form, nightsCount: diffDays, totalPrice: form.nightsCount * form.roomPrice});
+      }
+}, [form.nightsCount]);
 
   const changeHandler = (e) => {
     if (e.target.name === "name") {

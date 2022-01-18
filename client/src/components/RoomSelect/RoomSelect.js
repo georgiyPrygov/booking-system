@@ -25,7 +25,7 @@ const RoomSelect = () => {
         <Select
           labelId="room-select-label"
           id="room-type-select"
-          value={roomType}
+          value={id !== undefined ? roomType : ''}
           label="Тип комнаты"
           onChange={handleChange}
         >

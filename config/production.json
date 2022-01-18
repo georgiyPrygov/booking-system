@@ -1,5 +1,6 @@
 {
     "port": 80,
     "jwtSecret": "test",
-    "mongoUri": "test"
+    "mongoUri": "test",
+    "sendgridKey": "test"
 }

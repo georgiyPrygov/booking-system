@@ -1,0 +1,47 @@
+.bookings-list {
+    margin-top: 40px;
+    .booking-cards {
+        display: grid;
+        grid-gap: 32px;
+        max-width: 600px;
+        .booking-card {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding: 0 0 16px 0;
+            border-bottom: 1px solid #d2d2d2;
+            .card-left {
+                .name {
+                    font-size: 16px;
+                    font-weight: 600;
+                    line-height: 1.5;
+                }
+                .nigts-guests {
+                    font-size: 14px;
+                    color: #717171;
+                    line-height: 1.4;
+                }
+                .room-type {
+                    font-size: 14px;
+                    line-height: 1.4;
+                }
+            }
+            .booking-dates {
+                font-size: 16px;
+                line-height: 1.5;
+            }
+            .card-right {
+                .total {
+                    font-size: 16px;
+                    font-weight: 600;
+                    line-height: 1.5;
+                }
+                .book-date {
+                    font-size: 14px;
+                    line-height: 1.4;
+                    color: #717171;
+                }
+            }
+        }
+    }
+}

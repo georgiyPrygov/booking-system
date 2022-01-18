@@ -38,6 +38,18 @@ const schema = new Schema({
         type: Boolean,
         required: true
     },
+    nightsCount: {
+        type: Number
+    },
+    totalPrice: {
+        type: Number
+    },
+    guests: {
+        type: Number 
+    },
+    bookingDate: {
+        type: Date,
+    },
     owner: {type: Types.ObjectId, ref: 'User'}
 })
 

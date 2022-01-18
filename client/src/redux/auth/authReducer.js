@@ -3,7 +3,7 @@ import actions from './authActions';
 
 const userInitialState = {
     isAuthenticated: false,
-    userId: ''
+    userId: null
 }
 
 

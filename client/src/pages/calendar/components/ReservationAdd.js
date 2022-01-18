@@ -16,15 +16,16 @@ import {
 import calendarOperations from "../../../redux/calendar/calendarOperations";
 import authSelectors from "../../../redux/auth/authSelectors";
 import moment from "moment";
+import { useParams } from "react-router";
+import roomsData from "../../../utils/roomsData";
 
 const ReservationAdd = ({
   addReservation,
   range,
   userId,
-  roomType,
-  roomPrice,
 }) => {
-  const [form, setForm] = useState({
+  const {id} = useParams();
+  const initialState = {
     name: "",
     email: "",
     descr: "",
@@ -33,15 +34,37 @@ const ReservationAdd = ({
     end: null,
     title: "",
     owner: userId,
-    roomType,
-    roomPrice,
+    roomType: id,
+    roomPrice: roomsData[id].price,
     paymentStatus: false,
-  });
+    guests: 2,
+    totalPrice: null,
+    nightsCount: null,
+    bookingDate: new Date()
+  }
+  const [form, setForm] = useState(initialState);
   const [modalState, setModalState] = useState(false);
 
   useEffect(() => {
-    setForm({ ...form, start: range.start, end: range.end });
+    if (range.end !== null) {
+      const oneDay = 24 * 60 * 60 * 1000;
+
+      const diffDays = Math.round(
+        Math.abs((range.start - range.end) / oneDay)
+      );
+      setForm({ ...form, start: range.start, end: range.end , nightsCount: diffDays});
+    }
   }, [range]);
+
+  useEffect(() => {
+      setForm({...form, totalPrice: form.nightsCount * form.roomPrice});
+  }, [form.roomPrice, form.nightsCount]);
+
+  useEffect(() => {
+    setForm({...form, roomType: id});
+  },[id])
+
+
 
   const closeModal = () => setModalState(false);
 
@@ -62,6 +85,7 @@ const ReservationAdd = ({
   const handleSubmit = () => {
     addReservation(form);
     setModalState(false);
+    setForm(initialState)
   };
 
   const startCreate = () => {
@@ -163,20 +187,35 @@ const ReservationAdd = ({
               minRows={4}
               InputLabelProps={{ shrink: true }}
             />
+             <Box className="guests-and-price">
+      <TextField
+        required
+        id="guests"
+        label="Колличество гостей"
+        name="guests"
+        placeholder="2"
+        onChange={changeHandler}
+        value={form.guests}
+        margin="normal"
+        size="small"
+        InputLabelProps={{ shrink: true }}
+        type="number"
+      />
+      <TextField
+        required
+        id="price"
+        label="Цена за ночь"
+        name="roomPrice"
+        placeholder="1300"
+        onChange={changeHandler}
+        value={form.roomPrice}
+        type="number"
+        margin="normal"
+        size="small"
+        InputLabelProps={{ shrink: true }}
+      />
+      </Box>
             <Box className="price-and-payment">
-            <TextField
-              required
-              id="price"
-              label="Цена за ночь"
-              name="roomPrice"
-              placeholder="1300"
-              onChange={changeHandler}
-              value={form.roomPrice}
-              type="number"
-              margin="normal"
-              size="small"
-              InputLabelProps={{ shrink: true }}
-            />
             <FormControlLabel className="prepayment-checkbox" control={<Checkbox name="paymentStatus" onChange={changeHandler}/>} label="Предоплата" />
             </Box>
             <CardActions className="card-actions">

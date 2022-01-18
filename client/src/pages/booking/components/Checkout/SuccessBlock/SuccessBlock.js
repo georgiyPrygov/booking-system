@@ -44,6 +44,7 @@ const SuccessBlock = () => {
                 </a>
             </div>
             <div className="descr">Нам також можна написати на <a href="mailto:agorahotel.in.ua@gmail.com">agorahotel.in.ua@gmail.com</a> або зателефонувати за номером <a href="tel:+380971914806" class="phone-link">+38 (097) 191 48 06</a> </div>
+            <div className="descr">Ми вислали вам email з реквізитами на вказаний адрес.</div>
 
             <div className="next-booking"><NavLink to="/">Забронювати ще один номер</NavLink></div>
         </div>

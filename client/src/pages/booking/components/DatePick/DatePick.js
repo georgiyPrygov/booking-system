@@ -10,7 +10,7 @@ import access from "../../../../utils/calendarAccess";
 import calendarSelectors from "../../../../redux/calendar/calendarSelectors";
 import authSelectors from "../../../../redux/auth/authSelectors";
 import calendarOperations from "../../../../redux/calendar/calendarOperations";
-import './DatePick.scss'
+import "./DatePick.scss";
 
 const DatePick = ({
   reservations,
@@ -20,6 +20,7 @@ const DatePick = ({
   bookingRange,
   setAvailableRooms,
   setDatePickerState,
+  datePickerState,
 }) => {
   const { id } = useParams();
   const [rangeState, setRange] = useState({ from: null, to: null });
@@ -31,13 +32,6 @@ const DatePick = ({
   const modifiers = { start: rangeState.from, end: rangeState.to };
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      getReservations({
-        userId: access.USER_ID,
-        isAdmin: false,
-      });
-    }
-
     switch (id) {
       case "standard":
         setAvailableAmount(roomsData.standard.amount);
@@ -52,6 +46,16 @@ const DatePick = ({
         setAvailableAmount(6);
     }
   }, [isAuthenticated, getReservations, id]);
+
+  useEffect(() => {
+    if (datePickerState || window.location.href.indexOf("room") !== -1) {
+      getReservations({
+        userId: access.USER_ID,
+        isAdmin: false,
+        roomType: id ? id : ''
+      });
+    }
+  }, [datePickerState]);
 
   useEffect(() => {
     const disabledDates = [];
@@ -89,16 +93,17 @@ const DatePick = ({
             moment(item.start),
             moment(item.end),
             undefined,
-            "[]"
+            "[)"
           ) ||
           moment(rangeState.to).isBetween(
             moment(item.start),
             moment(item.end),
             undefined,
-            "[]"
+            "()"
           )
         );
       });
+      console.log(getRoomsFormDates)
       const openedRooms = {
         standard: roomsData.standard.amount,
         luxe: roomsData.luxe.amount,
@@ -135,9 +140,9 @@ const DatePick = ({
   }, [rangeState.to]);
 
   useEffect(() => {
-      if(bookingRange.from !== null) {
-        setRange(bookingRange);
-      }
+    if (bookingRange.from !== null) {
+      setRange(bookingRange);
+    }
   }, [bookingRange]);
 
   const handleDayClick = (day, { disabled }) => {
@@ -198,6 +203,7 @@ const mapStateToProps = (state) => ({
   bookingRange: calendarSelectors.getBookingRange(state),
   isAuthenticated: authSelectors.getIsAuthenticated(state),
   guests: calendarSelectors.getGuests(state),
+  datePickerState: calendarSelectors.getDatePickerState(state),
 });
 const mapDispatchToProps = (dispatch) => ({
   getReservations: (userId) =>

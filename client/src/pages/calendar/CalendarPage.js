@@ -8,12 +8,12 @@ import calendarOperations from "../../redux/calendar/calendarOperations";
 import calendarSelectors from "../../redux/calendar/calendarSelectors";
 import { useParams } from "react-router";
 import RoomSelect from "../../components/RoomSelect/RoomSelect";
-import { Container, Box} from "@mui/material";
+import { Container, Box } from "@mui/material";
 import "./CalendarPage.scss";
 import snackbarOperations from "../../redux/snackbar/snackbarOperations";
 import ReservationsList from "./components/ReservationsList";
 import ReservationAdd from "./components/ReservationAdd";
-require('moment/locale/ru.js')
+require("moment/locale/ru.js");
 
 const CalendarPage = ({
   userId,
@@ -26,25 +26,8 @@ const CalendarPage = ({
   const { id } = useParams();
   const localizer = momentLocalizer(moment);
 
-  const [roomPrice, setRoomPrice] = useState(0);
-  const [availableAmount, setAvailableAmount] = useState(0);
-
   useEffect(() => {
-    getReservations({ userId, roomType: id, isAdmin: true});
-    switch (id) {
-      case "standard":
-        setAvailableAmount(1);
-        setRoomPrice(1100);
-        break;
-      case "luxe":
-        setAvailableAmount(2);
-        setRoomPrice(1300);
-        break;
-      case "deluxe":
-        setAvailableAmount(3);
-        setRoomPrice(1400);
-        break;
-    }
+    getReservations({ userId, roomType: id, isAdmin: true });
   }, [reservationsState, id, userId, getReservations]);
 
   const handleSelect = ({ start, end }) => {
@@ -56,15 +39,6 @@ const CalendarPage = ({
     } else {
       setRange({ start, end });
     }
-
-    // if (reservationsForCell.length >= availableAmount) {
-    //   setIsOpened(true);
-    //   snackbarRun({
-    //     message: "Нет свободных номеров на эту дату",
-    //     status: "error",
-    //   });
-    //   return false;
-    // }
   };
 
   const eventProps = function (event) {
@@ -116,12 +90,14 @@ const CalendarPage = ({
           dayPropGetter={calendarStyle}
         />
         <div className="calendar-sidebar">
-          {range !== null && (
-            <>
-              <ReservationsList />
-              <ReservationAdd roomPrice={roomPrice} roomType={id} />
-            </>
-          )}
+          <div className="calendar-sidebar-content">
+            {range !== null && (
+              <>
+                <ReservationsList />
+                <ReservationAdd />
+              </>
+            )}
+          </div>
         </div>
       </div>
     </Container>

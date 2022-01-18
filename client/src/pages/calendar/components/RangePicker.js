@@ -8,7 +8,7 @@ import { useParams } from "react-router";
 import calendarOperations from "../../../redux/calendar/calendarOperations";
 import localization from "../../../utils/localization";
 
-const RangePicker = ({reservations, rangeDates, setEditedRange}) => {
+const RangePicker = ({reservations, setEditedRange, editedReservation}) => {
   const rangeInitialState = { from: null, to: null };
   const [rangeState, setRange] = useState(rangeInitialState);
   const [nextDisabled, setNextDisabled] = useState(null);
@@ -37,11 +37,12 @@ const RangePicker = ({reservations, rangeDates, setEditedRange}) => {
 
 
   useEffect(() => {
+    if(reservations.length !== 0) {
     const disabledDates = [];
     disabledDates.push({ before: new Date() });
     for (let i = 0; i < reservations.length; i++) {
       const filtered = reservations.filter((item) => {
-        return item.start === reservations[i].start && item.start !== rangeDates.from;
+        return item.start === reservations[i].start && item.start !== editedReservation[0].start;
       });
 
       if (filtered.length >= availableAmount) {
@@ -53,7 +54,8 @@ const RangePicker = ({reservations, rangeDates, setEditedRange}) => {
     }
     setDisabledDays(disabledDates);
     setBookedDay(disabledDates);
-  }, [reservations, rangeDates]);
+  }
+  }, [reservations, availableAmount]);
 
   useEffect(() => {
     if (rangeState.from)
@@ -70,6 +72,7 @@ const RangePicker = ({reservations, rangeDates, setEditedRange}) => {
   }, [bookedDays]);
 
   const handleDayClick = (day, { disabled }) => {
+    day.setHours(0,0,0,0)
     if (disabled) {
       handleResetClick();
       return;
@@ -119,7 +122,7 @@ const RangePicker = ({reservations, rangeDates, setEditedRange}) => {
 };
 
 const mapStateToProps = (state) => ({
-  reservations: calendarSelectors.getReservations(state),
+  reservations: calendarSelectors.getReservations(state)
 });
 const mapDispatchToProps = (dispatch) => ({
     setEditedRange: (data) =>

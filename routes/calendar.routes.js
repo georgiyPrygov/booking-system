@@ -7,6 +7,10 @@ const router = Router();
 const User = require("../models/User");
 const Reservation = require("../models/Reservation");
 const auth = require("./middleware/auth.middleware");
+const sgMail = require("@sendgrid/mail");
+const moment = require("moment");
+
+sgMail.setApiKey(config.get("sendgridKey"));
 
 // /api/reservations
 router.post(
@@ -26,7 +30,13 @@ router.post(
         roomType,
         roomPrice,
         paymentStatus,
+        guests,
+        totalPrice,
+        nightsCount,
+        bookingDate,
       } = req.body;
+
+      console.log(req.body);
 
       const errors = validationResult(req);
 
@@ -49,7 +59,52 @@ router.post(
         roomType,
         roomPrice,
         paymentStatus,
+        guests,
+        totalPrice,
+        nightsCount,
+        bookingDate,
       });
+
+      moment.locale('ru')
+      const clientMsg = {
+        to: email,
+        from: 'agorahotel.in.ua@gmail.com',
+        templateId: 'd-17aad223abdd4463b9e57e3b048db3ba',
+        dynamic_template_data: {
+          start: moment(start).format("DD.MM.YY"),
+          end: moment(end).format("DD.MM.YY"),
+          prepayment: totalPrice / nightsCount
+        },
+      };
+
+      const adminMsg = {
+        to: "agorahotel.in.ua@gmail.com", // Change to your recipient
+        from: "agorahotel.in.ua@gmail.com", // Change to your verified sender
+        templateId: 'd-0420f4f0ec5944299af49dd5a977b48a',
+        dynamic_template_data: {
+          name,
+          email,
+          phone,
+          descr,
+          start: moment(start).format("DD.MM.YY"),
+          end: moment(end).format("DD.MM.YY"),
+          roomType,
+          roomPrice,
+          guests,
+          startSubject: moment(start).format('MMMM Do YYYY'),
+          totalPrice,
+          nightsCount
+        }
+      };
+
+      sgMail.send(adminMsg).catch(err => {
+        console.log(err);
+        console.log(err.response.body)
+      });
+      sgMail.send(clientMsg).catch(err => {
+        console.log(err);
+        console.log(err.response.body)
+      });; 
 
       await reservation.save();
       res.status(201).json({ message: "Номер успішно заброньовано" });
