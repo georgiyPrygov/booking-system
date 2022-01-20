@@ -64,6 +64,14 @@ const CalendarPage = ({
     if (day < today) {
       backgroundColor = "#e5e5e5";
     }
+    if(moment(day).isBetween(
+      moment(range.start),
+      moment(range.end),
+      undefined,
+      "[)"
+    )) {
+      backgroundColor = "#eaf6ff";
+    }
     return {
       style: {
         backgroundColor: backgroundColor,

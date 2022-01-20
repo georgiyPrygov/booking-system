@@ -34,9 +34,14 @@ const BookingDetails = () => {
       <div className="section">
           <div className="section-title">Деталі бронювання</div>
           <div className="section-content">
-          <div className="section-content__item">
-                <div className="item-subtitle">Номер</div>
-                <div className="item-value">{roomsData[id].name} ( {roomsData[id].category} )</div>
+              <div className="booking-details-top">
+                  <div className="room-image">
+                      <img src={roomsData[id].slider_photos[0]}  width='150'/>
+                  </div>
+                  <div className="top-content">
+                  <div className="category">{roomsData[id].category}</div>
+                  <div className="name">{roomsData[id].name}</div>
+                  </div>
               </div>
               <div className="section-content__item">
                 <div className="item-subtitle">Дати</div>

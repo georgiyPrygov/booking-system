@@ -19,7 +19,7 @@ const DetailsGallery = () => {
         onClick={() => handleGalleryState(true)}
       >
         <div className="main-block">
-          {roomsData[id].slider_photos.map((item, idx) => {
+          {roomsData[id].big_photos.map((item, idx) => {
             {
               if (idx === 0) {
                 return (
@@ -66,7 +66,7 @@ const DetailsGallery = () => {
           </Button>
         </div>
         <div className="overflow-gallery-content">
-          {roomsData[id].slider_photos.map((item, idx) => {
+          {roomsData[id].big_photos.map((item, idx) => {
               return (
                 <div className="gallery-image" key={idx}>
                   <img src={item} width="200" />

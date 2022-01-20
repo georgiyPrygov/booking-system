@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import DayPicker, { DateUtils } from "react-day-picker";
 import "react-day-picker/lib/style.css";
@@ -21,6 +21,7 @@ const DatePick = ({
   setAvailableRooms,
   setDatePickerState,
   datePickerState,
+  guests
 }) => {
   const { id } = useParams();
   const [rangeState, setRange] = useState({ from: null, to: null });
@@ -32,18 +33,10 @@ const DatePick = ({
   const modifiers = { start: rangeState.from, end: rangeState.to };
 
   useEffect(() => {
-    switch (id) {
-      case "standard":
-        setAvailableAmount(roomsData.standard.amount);
-        break;
-      case "luxe":
-        setAvailableAmount(roomsData.luxe.amount);
-        break;
-      case "deluxe":
-        setAvailableAmount(roomsData.deluxe.amount);
-        break;
-      default:
-        setAvailableAmount(6);
+    if (id !== undefined) {
+      setAvailableAmount(roomsData[id].amount);
+    } else {
+      setAvailableAmount(Object.keys(roomsData).length);
     }
   }, [isAuthenticated, getReservations, id]);
 
@@ -52,7 +45,7 @@ const DatePick = ({
       getReservations({
         userId: access.USER_ID,
         isAdmin: false,
-        roomType: id ? id : ''
+        roomType: id ? id : "",
       });
     }
   }, [datePickerState]);
@@ -87,57 +80,47 @@ const DatePick = ({
     if (rangeState.to !== null) {
       setBookedDay(disabledDays);
 
-      const getRoomsFormDates = reservations.filter((item) => {
-        return (
-          moment(rangeState.from).isBetween(
-            moment(item.start),
-            moment(item.end),
-            undefined,
-            "[)"
-          ) ||
-          moment(rangeState.to).isBetween(
-            moment(item.start),
-            moment(item.end),
-            undefined,
-            "()"
-          )
+      if (id === undefined) {
+        const getRoomsFormDates = reservations.filter((item) => {
+          return (
+            moment(rangeState.from).isBetween(
+              moment(item.start),
+              moment(item.end),
+              undefined,
+              "[)"
+            ) ||
+            moment(rangeState.to).isBetween(
+              moment(item.start),
+              moment(item.end),
+              undefined,
+              "()"
+            )
+          );
+        });
+        const openedRooms = Object.entries(roomsData).reduce(
+          (a, item) => ({ ...a, [item[0]]: item[1].amount }),
+          {}
         );
-      });
-      console.log(getRoomsFormDates)
-      const openedRooms = {
-        standard: roomsData.standard.amount,
-        luxe: roomsData.luxe.amount,
-        deluxe: roomsData.deluxe.amount,
-      };
-      for (let j = 0; j < getRoomsFormDates.length; j++) {
-        if (
-          getRoomsFormDates[j].roomType === "standard" &&
-          openedRooms.standard !== 0
-        ) {
-          openedRooms.standard = openedRooms.standard - 1;
+        for (let j = 0; j < getRoomsFormDates.length; j++) {
+          if (openedRooms[getRoomsFormDates[j].roomType] !== 0) {
+            openedRooms[getRoomsFormDates[j].roomType] =
+              openedRooms[getRoomsFormDates[j].roomType] - 1;
+          }
         }
-        if (
-          getRoomsFormDates[j].roomType === "luxe" &&
-          openedRooms.luxe !== 0
-        ) {
-          openedRooms.luxe = openedRooms.luxe - 1;
+        
+        if(guests.adult + guests.children > 2) {
+          openedRooms.standard = 0
         }
-        if (
-          getRoomsFormDates[j].roomType === "deluxe" &&
-          openedRooms.deluxe !== 0
-        ) {
-          openedRooms.deluxe = openedRooms.deluxe - 1;
-        }
-      }
 
-      setAvailableRooms(openedRooms);
+        setAvailableRooms(openedRooms);
+      }
       setBookingRange(rangeState);
       setDatePickerState(false);
     }
     if (rangeState.to === null) {
       setBookingRange({ from: null, to: null });
     }
-  }, [rangeState.to]);
+  }, [rangeState.to, guests]);
 
   useEffect(() => {
     if (bookingRange.from !== null) {

@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import authSelectors from "../../../../redux/auth/authSelectors";
 import calendarSelectors from "../../../../redux/calendar/calendarSelectors";
-import './BookingsList.scss'
+import './BookingsList.scss';
+import roomsData from "../../../../utils/roomsData";
 
 const BookingsList = ({ reservations, isAuthenticated }) => {
   const [filteredReservations, setFilteredReservations] = useState(null);
@@ -34,7 +35,7 @@ const BookingsList = ({ reservations, isAuthenticated }) => {
                   <div className="card-left">
                     <div className="name">{item.name}</div>
                     <div className="nigts-guests">{`${item.nightsCount} ночей - ${item.guests} гостей`}</div>
-                    <div className="room-type">{item.roomType}</div>
+                    <div className="room-type">{roomsData[item.roomType].adminCategory}</div>
                   </div>
                   <div className="card-center">
                     <div className="booking-dates">

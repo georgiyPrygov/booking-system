@@ -6,7 +6,8 @@ import {
   InputLabel,
 } from "@mui/material";
 import { useNavigate, useParams } from 'react-router-dom';
-import './RoomSelect.scss'
+import './RoomSelect.scss';
+import roomsData from "../../utils/roomsData";
 
 
 const RoomSelect = () => {
@@ -29,9 +30,9 @@ const RoomSelect = () => {
           label="Тип комнаты"
           onChange={handleChange}
         >
-          <MenuItem value={"/calendar/standard"}>Стандарт</MenuItem>
-          <MenuItem value={"/calendar/luxe"}>Люкс</MenuItem>
-          <MenuItem value={"/calendar/deluxe"}>Делюкс</MenuItem>
+          {Object.keys(roomsData).map((item) => {
+            return <MenuItem key={roomsData[item].id} value={`/calendar/${roomsData[item].adminName}`}>{roomsData[item].adminCategory}</MenuItem>
+          })}
         </Select>
       </FormControl>
   );
