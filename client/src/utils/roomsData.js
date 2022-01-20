@@ -36,6 +36,7 @@ const luxe_2 = {
     slider_photos: [
         require('../assets/img/rooms/luxe/slider/luxe_2_6.jpg').default,
         require('../assets/img/rooms/luxe/slider/luxe_2_1.jpeg').default,
+        require('../assets/img/rooms/luxe/slider/luxe_2_22.jpeg').default,
         require('../assets/img/rooms/luxe/slider/luxe_2_3.jpeg').default,
         require('../assets/img/rooms/luxe/slider/luxe_2_4.jpeg').default,
     ],
