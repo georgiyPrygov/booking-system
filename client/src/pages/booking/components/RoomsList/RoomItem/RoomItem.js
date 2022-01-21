@@ -11,10 +11,12 @@ import SwiperCore, {
   Keyboard,
 } from "swiper";
 import "./RoomItem.scss";
+import { connect } from "react-redux";
+import calendarSelectors from "../../../../../redux/calendar/calendarSelectors";
 
 SwiperCore.use([Navigation, Pagination, Mousewheel, Keyboard]);
 
-const RoomItem = ({ roomType, amountAvailable }) => {
+const RoomItem = ({ roomType, amountAvailable, guests }) => {
 
 
   return (
@@ -48,7 +50,8 @@ const RoomItem = ({ roomType, amountAvailable }) => {
             {`( Доступно ${amountAvailable} )`}
           </div>
           <div className="inner">
-            <b>{roomsData[roomType].price} грн</b> / ніч
+            <b>{ (guests.adult + guests.children) > 2 ? roomsData[roomType].price + roomsData[roomType].extra_cost : roomsData[roomType].price
+            } грн</b> / ніч
           </div>
         </div>
       </div>
@@ -57,4 +60,8 @@ const RoomItem = ({ roomType, amountAvailable }) => {
   );
 };
 
-export default RoomItem;
+const mapStateToProps = (state) => ({
+  guests: calendarSelectors.getGuests(state),
+});
+
+export default connect(mapStateToProps,null)(RoomItem);
