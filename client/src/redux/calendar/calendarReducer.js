@@ -4,7 +4,7 @@ import actions from "./calendarActions";
 const calendarState = {
   reservations: [],
   disabledDates: [],
-  range: {start: new Date(), end: new Date()},
+  range: {start: null, end: null},
   reservationsState: 0,
   editedRange: {from:null, to: null},
   bookingRange: {from:null, to: null},

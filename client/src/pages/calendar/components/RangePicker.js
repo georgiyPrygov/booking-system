@@ -7,6 +7,7 @@ import calendarSelectors from "../../../redux/calendar/calendarSelectors";
 import { useParams } from "react-router";
 import calendarOperations from "../../../redux/calendar/calendarOperations";
 import localization from "../../../utils/localization";
+import roomsData from "../../../utils/roomsData";
 
 const RangePicker = ({reservations, setEditedRange, editedReservation}) => {
   const rangeInitialState = { from: null, to: null };
@@ -22,17 +23,7 @@ const RangePicker = ({reservations, setEditedRange, editedReservation}) => {
   
 
   useEffect(() => {
-    switch (id) {
-      case "standard":
-        setAvailableAmount(1);
-        break;
-      case "luxe":
-        setAvailableAmount(2);
-        break;
-      case "deluxe":
-        setAvailableAmount(3);
-        break;
-    }
+    setAvailableAmount(roomsData[id].amount);
   }, [id]);
 
 

@@ -83,15 +83,15 @@ const DatePick = ({
       if (id === undefined) {
         const getRoomsFormDates = reservations.filter((item) => {
           return (
-            moment(rangeState.from).isBetween(
-              moment(item.start),
-              moment(item.end),
+            moment(item.start).isBetween(
+              moment(rangeState.from),
+              moment(rangeState.to),
               undefined,
               "[)"
             ) ||
-            moment(rangeState.to).isBetween(
-              moment(item.start),
-              moment(item.end),
+            moment(item.end).isBetween(
+              moment(rangeState.from),
+              moment(rangeState.to),
               undefined,
               "()"
             )
@@ -107,7 +107,7 @@ const DatePick = ({
               openedRooms[getRoomsFormDates[j].roomType] - 1;
           }
         }
-        
+
         if(guests.adult + guests.children > 2) {
           openedRooms.standard = 0
         }

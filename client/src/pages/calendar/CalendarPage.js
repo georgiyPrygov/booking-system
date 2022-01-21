@@ -30,7 +30,7 @@ const CalendarPage = ({
     getReservations({ userId, roomType: id, isAdmin: true });
   }, [reservationsState, id, userId, getReservations]);
 
-  const handleSelect = ({ start, end }) => {
+  const handleSelect = ({start, end }) => {
     let today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -79,6 +79,8 @@ const CalendarPage = ({
     };
   };
 
+  
+
   return (
     <Container>
       <Box className="calendar-top-block">
@@ -92,6 +94,7 @@ const CalendarPage = ({
           localizer={localizer}
           events={reservations}
           defaultView={Views.MONTH}
+          views={['month', 'day']}
           onSelectEvent={handleSelect}
           onSelectSlot={handleSelect}
           eventPropGetter={eventProps}
@@ -99,7 +102,7 @@ const CalendarPage = ({
         />
         <div className="calendar-sidebar">
           <div className="calendar-sidebar-content">
-            {range !== null && (
+            {range !== null && range.start !== range.end && (
               <>
                 <ReservationsList />
                 <ReservationAdd />

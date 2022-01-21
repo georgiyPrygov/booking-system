@@ -94,6 +94,9 @@
         font-size: 20px;
     }
 }
+.rbc-row .rbc-date-cell a {
+  pointer-events: none;
+}
 
 @media (max-width: 1024px) {
     .calendar-grid {

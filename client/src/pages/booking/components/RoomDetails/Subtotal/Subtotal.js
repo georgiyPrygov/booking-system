@@ -28,19 +28,7 @@ const Subtotal = ({
   const [pickerTitle, setPickerTitle] = useState("");
 
   useEffect(() => {
-    switch (id) {
-      case "standard":
-        setRoomPrice(roomsData.standard.price);
-        break;
-      case "luxe":
-        setRoomPrice(roomsData.luxe.price);
-        break;
-      case "deluxe":
-        setRoomPrice(roomsData.deluxe.price);
-        break;
-      default:
-        setRoomPrice(roomsData.standard.price);
-    }
+    setRoomPrice(roomsData[id].price);
   }, [id]);
 
   useEffect(() => {

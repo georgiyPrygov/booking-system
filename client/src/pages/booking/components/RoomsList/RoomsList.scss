@@ -2,3 +2,12 @@
     border-bottom: 1px solid #dddddd;
     padding: 24px 0;
 }
+.no-rooms {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    max-width: 375px;
+    margin: 32px auto 0 auto;
+    grid-gap: 16px;
+    font-size: 18px;
+}

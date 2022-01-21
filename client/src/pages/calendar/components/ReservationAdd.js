@@ -62,7 +62,7 @@ const ReservationAdd = ({
   }, [form.roomPrice, form.nightsCount]);
 
   useEffect(() => {
-    setForm({...form, roomType: id});
+    setForm({...form, roomType: id, roomPrice: roomsData[id].price});
   },[id])
 
 
