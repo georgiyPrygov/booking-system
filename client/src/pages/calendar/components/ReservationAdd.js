@@ -31,8 +31,8 @@ const ReservationAdd = ({
     email: "",
     descr: "",
     phone: "",
-    start: null,
-    end: null,
+    start: range.start,
+    end: range.end,
     title: "",
     owner: userId,
     roomType: id,
@@ -48,14 +48,8 @@ const ReservationAdd = ({
   const [modalState, setModalState] = useState(false);
 
   useEffect(() => {
-    if (range.end !== null) {
-      const oneDay = 24 * 60 * 60 * 1000;
 
-      const diffDays = Math.round(
-        Math.abs((range.start - range.end) / oneDay)
-      );
-      setForm({ ...form, start: range.start, end: range.end , nightsCount: diffDays});
-    }
+      setForm({ ...form , start: range.start, end: range.end, nightsCount: moment(range.end).diff(moment(range.start), 'days' )});
   }, [range]);
 
   useEffect(() => {

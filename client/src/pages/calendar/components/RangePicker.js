@@ -9,7 +9,7 @@ import calendarOperations from "../../../redux/calendar/calendarOperations";
 import localization from "../../../utils/localization";
 import roomsData from "../../../utils/roomsData";
 
-const RangePicker = ({reservations, setEditedRange, editedReservation}) => {
+const RangePicker = ({reservations, setEditedRange, editedReservation, range}) => {
   const rangeInitialState = { from: null, to: null };
   const [rangeState, setRange] = useState(rangeInitialState);
   const [nextDisabled, setNextDisabled] = useState(null);
@@ -25,6 +25,10 @@ const RangePicker = ({reservations, setEditedRange, editedReservation}) => {
   useEffect(() => {
     setAvailableAmount(roomsData[id].amount);
   }, [id]);
+
+  useEffect(() => {
+    setEditedRange({from: range.start, to: range.end});
+  },[range])
 
 
   useEffect(() => {
@@ -113,7 +117,8 @@ const RangePicker = ({reservations, setEditedRange, editedReservation}) => {
 };
 
 const mapStateToProps = (state) => ({
-  reservations: calendarSelectors.getReservations(state)
+  reservations: calendarSelectors.getReservations(state),
+  range: calendarSelectors.getRange(state)
 });
 const mapDispatchToProps = (dispatch) => ({
     setEditedRange: (data) =>

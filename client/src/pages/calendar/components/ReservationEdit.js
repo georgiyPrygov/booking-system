@@ -13,7 +13,6 @@ import {
 import calendarOperations from "../../../redux/calendar/calendarOperations";
 import "react-day-picker/lib/style.css";
 import RangePicker from "./RangePicker";
-import moment from "moment";
 import { useParams } from "react-router";
 import roomsData from "../../../utils/roomsData";
 
@@ -22,7 +21,7 @@ const ReservationsEdit = ({
   setModalState,
   updateReservation,
   deleteReservation,
-  editedRange,
+  editedRange
 }) => {
   const {id} = useParams();
   const initialState = {
@@ -45,7 +44,7 @@ const ReservationsEdit = ({
 
   useEffect(() => {
     setForm(editedReservation[0]);
-    if(form.name !== '') {
+    if(form.name !== '' && editedRange.to !== null) {
       setForm({...form, start: editedRange.from, end: editedRange.to})
     }
   }, [editedReservation,editedRange]);
@@ -60,6 +59,9 @@ const ReservationsEdit = ({
       });
     } else {
       setForm({ ...form, [e.target.name]: e.target.value });
+    }
+    if(e.target.name === "paymentStatus") {
+      setForm({...form, paymentStatus: e.target.checked})
     }
   };
   const handleSubmit = () => {
@@ -186,7 +188,7 @@ const ReservationsEdit = ({
 };
 const mapStateToProps = (state) => ({
   reservations: calendarSelectors.getReservations(state),
-  editedRange: calendarSelectors.getEditedRange(state),
+  editedRange: calendarSelectors.getEditedRange(state)
 });
 const mapDispatchToProps = (dispatch) => ({
   updateReservation: (data) =>

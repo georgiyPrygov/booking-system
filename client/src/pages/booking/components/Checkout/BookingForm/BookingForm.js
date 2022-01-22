@@ -85,7 +85,8 @@ const BookingForm = ({
           roomPrice: roomsData[id].price,
           guests: searchParams.get("guests"),
           paymentStatus: false,
-          bookingDate: new Date()
+          bookingDate: new Date(),
+          isAdmin: false
         });
         setStateBeforeSumbit(null);
         setIsConfirmed(null);
@@ -125,7 +126,8 @@ const BookingForm = ({
     totalPrice: null,
     guests: searchParams.get("guests"),
     nightsCount: null,
-    bookingDate: new Date()
+    bookingDate: new Date(),
+    isAdmin: false
   });
 
   useEffect(() => {
