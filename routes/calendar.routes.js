@@ -65,8 +65,8 @@ router.post(
         bookingDate,
       });
 
-      if(!isAdmin) {
-        moment.locale('ru')
+      if(isAdmin !== true) {
+        moment.locale('ua')
         const clientMsg = {
           to: email,
           from: 'agorahotel.in.ua@gmail.com',
@@ -97,15 +97,8 @@ router.post(
             nightsCount
           }
         };
-  
-        sgMail.send(adminMsg).catch(err => {
-          console.log(err);
-          console.log(err.response.body)
-        });
-        sgMail.send(clientMsg).catch(err => {
-          console.log(err);
-          console.log(err.response.body)
-        });; 
+        sgMail.send(adminMsg);
+        sgMail.send(clientMsg);
       }
 
       await reservation.save();
