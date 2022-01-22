@@ -15,6 +15,7 @@ import "react-day-picker/lib/style.css";
 import RangePicker from "./RangePicker";
 import { useParams } from "react-router";
 import roomsData from "../../../utils/roomsData";
+import moment from 'moment';
 
 const ReservationsEdit = ({
   editedReservation,
@@ -45,9 +46,20 @@ const ReservationsEdit = ({
   useEffect(() => {
     setForm(editedReservation[0]);
     if(form.name !== '' && editedRange.to !== null) {
-      setForm({...form, start: editedRange.from, end: editedRange.to})
+      setForm({...form, start: editedRange.from, end: editedRange.to, nightsCount: moment(editedRange.to).diff(moment(editedRange.from), 'days' )})
     }
   }, [editedReservation,editedRange]);
+
+
+useEffect(() => {
+    setForm({...form, totalPrice: form.nightsCount * form.roomPrice});
+}, [form.roomPrice, form.nightsCount]);
+
+useEffect(() => {
+  setForm({...form, roomType: id, roomPrice: roomsData[id].price});
+},[id])
+
+  
 
 
   const changeHandler = (e) => {
