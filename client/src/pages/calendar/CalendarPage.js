@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Calendar, Views, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
+import 'moment-timezone';
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { connect } from "react-redux";
 import authSelectors from "../../redux/auth/authSelectors";
@@ -13,7 +14,8 @@ import "./CalendarPage.scss";
 import snackbarOperations from "../../redux/snackbar/snackbarOperations";
 import ReservationsList from "./components/ReservationsList";
 import ReservationAdd from "./components/ReservationAdd";
-require("moment/locale/ru.js");
+require("moment/locale/uk.js");
+require('moment-timezone');
 
 const CalendarPage = ({
   userId,
@@ -25,14 +27,16 @@ const CalendarPage = ({
 }) => {
   const { id } = useParams();
   const localizer = momentLocalizer(moment);
-
+  moment.tz.setDefault("UTC")
   useEffect(() => {
     getReservations({ userId, roomType: id, isAdmin: true });
   }, [reservationsState, id, userId, getReservations]);
 
   const handleSelect = ({start, end }) => {
+    console.log(start);
     let today = new Date();
     today.setHours(0, 0, 0, 0);
+    console.log('today', today)
 
     if (start < today) {
       return false;
@@ -94,7 +98,6 @@ const CalendarPage = ({
           localizer={localizer}
           events={reservations}
           defaultView={Views.MONTH}
-          views={['month', 'day']}
           onSelectEvent={handleSelect}
           onSelectSlot={handleSelect}
           eventPropGetter={eventProps}
