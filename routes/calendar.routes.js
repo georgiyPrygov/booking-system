@@ -37,6 +37,8 @@ router.post(
         isAdmin
       } = req.body;
 
+      console.log(req.body)
+
 
       const errors = validationResult(req);
 
@@ -65,7 +67,7 @@ router.post(
         bookingDate,
       });
 
-      if(isAdmin !== "true") {
+      if(isAdmin !== true) {
         moment.locale('ua')
         const clientMsg = {
           to: email,
