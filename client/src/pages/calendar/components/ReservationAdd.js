@@ -48,7 +48,6 @@ const ReservationAdd = ({
   const [modalState, setModalState] = useState(false);
 
   useEffect(() => {
-
       setForm({ ...form , start: range.start, end: range.end, nightsCount: moment(range.end).diff(moment(range.start), 'days' )});
   }, [range]);
 
