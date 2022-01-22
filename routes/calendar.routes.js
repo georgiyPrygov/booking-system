@@ -65,7 +65,7 @@ router.post(
         bookingDate,
       });
 
-      if(isAdmin !== true) {
+      if(isAdmin !== "true") {
         moment.locale('ua')
         const clientMsg = {
           to: email,
