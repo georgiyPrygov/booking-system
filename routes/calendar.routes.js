@@ -37,8 +37,6 @@ router.post(
         isAdmin
       } = req.body;
 
-      console.log(req.body)
-
 
       const errors = validationResult(req);
 
@@ -67,7 +65,7 @@ router.post(
         bookingDate,
       });
 
-      if(isAdmin !== true) {
+      if(isAdmin === false) {
         moment.locale('ua')
         const clientMsg = {
           to: email,
@@ -78,7 +76,7 @@ router.post(
             end: moment(end).format("DD.MM.YY"),
             prepayment: totalPrice / nightsCount
           },
-        };
+        }
   
         const adminMsg = {
           to: "agorahotel.in.ua@gmail.com", // Change to your recipient
@@ -98,9 +96,9 @@ router.post(
             totalPrice,
             nightsCount
           }
-        };
-        sgMail.send(adminMsg);
-        sgMail.send(clientMsg);
+        }
+        sgMail.send(adminMsg)
+        sgMail.send(clientMsg)
       }
 
       await reservation.save();
