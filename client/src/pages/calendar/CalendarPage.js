@@ -27,21 +27,19 @@ const CalendarPage = ({
 }) => {
   const { id } = useParams();
   const localizer = momentLocalizer(moment);
-  moment.tz.setDefault("UTC")
   useEffect(() => {
     getReservations({ userId, roomType: id, isAdmin: true });
   }, [reservationsState, id, userId, getReservations]);
 
   const handleSelect = ({start, end }) => {
-    console.log(start);
+
     let today = new Date();
     today.setHours(0, 0, 0, 0);
-    console.log('today', today)
 
-    if (start < today) {
+    if (moment(start).tz("Europe/Kiev").format() < today) {
       return false;
     } else {
-      setRange({ start, end });
+      setRange({ start: moment(start).tz("Europe/Kiev").format(), end: moment(end).tz("Europe/Kiev").format() });
     }
   };
 

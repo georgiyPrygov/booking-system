@@ -24,6 +24,7 @@ const ReservationAdd = ({
   range,
   userId,
 }) => {
+  moment.tz.setDefault("UTC");
   const {id} = useParams();
   const initialState = {
     name: "",
