@@ -127,7 +127,7 @@ const BookingForm = ({
     guests: searchParams.get("guests"),
     nightsCount: null,
     bookingDate: new Date(),
-    isAdmin: false
+    notAdmin: true
   });
 
   useEffect(() => {

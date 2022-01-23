@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "moment-timezone";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { connect } from "react-redux";

@@ -34,7 +34,7 @@ router.post(
         totalPrice,
         nightsCount,
         bookingDate,
-        isAdmin
+        notAdmin
       } = req.body;
 
 
@@ -47,25 +47,7 @@ router.post(
         });
       }
 
-      const reservation = new Reservation({
-        name,
-        email,
-        phone,
-        descr,
-        start,
-        end,
-        title,
-        owner,
-        roomType,
-        roomPrice,
-        paymentStatus,
-        guests,
-        totalPrice,
-        nightsCount,
-        bookingDate,
-      });
-
-      if(isAdmin === false) {
+      if(notAdmin) {
         moment.locale('ua')
         const clientMsg = {
           to: email,
@@ -100,6 +82,24 @@ router.post(
         sgMail.send(adminMsg)
         sgMail.send(clientMsg)
       }
+
+      const reservation = new Reservation({
+        name,
+        email,
+        phone,
+        descr,
+        start,
+        end,
+        title,
+        owner,
+        roomType,
+        roomPrice,
+        paymentStatus,
+        guests,
+        totalPrice,
+        nightsCount,
+        bookingDate,
+      });
 
       await reservation.save();
       res.status(201).json({ message: "Номер успішно заброньовано" });

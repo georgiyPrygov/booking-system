@@ -41,8 +41,7 @@ const ReservationAdd = ({
     guests: 2,
     totalPrice: null,
     nightsCount: null,
-    bookingDate: new Date(),
-    isAdmin: true
+    bookingDate: new Date()
   }
   const [form, setForm] = useState(initialState);
   const [modalState, setModalState] = useState(false);
