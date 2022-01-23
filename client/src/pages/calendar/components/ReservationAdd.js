@@ -53,8 +53,12 @@ const ReservationAdd = ({
   
 
   useEffect(() => {
-      setForm({...form, nightsCount: moment(range.end).diff(moment(range.start), 'days' ), totalPrice: form.nightsCount * form.roomPrice});
+      setForm({...form, nightsCount: moment(range.end).diff(moment(range.start), 'days' )});
   }, [modalState]);
+
+  useEffect(() => {
+    setForm({...form, totalPrice: form.nightsCount * form.roomPrice});
+  },[form.nightsCount])
 
   useEffect(() => {
     setForm({...form, roomType: id, roomPrice: roomsData[id].price});
