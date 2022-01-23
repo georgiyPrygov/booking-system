@@ -47,7 +47,7 @@ router.post(
         });
       }
 
-      if(notAdmin) {
+      if(notAdmin === true) {
         moment.locale('ua')
         const clientMsg = {
           to: email,
