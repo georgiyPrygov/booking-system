@@ -83,24 +83,33 @@ const DatePick = ({
       if (id === undefined) {
         const getRoomsFormDates = reservations.filter((item) => {
           return (
+            moment(rangeState.from).isBetween(
+              moment(item.start),
+              moment(item.end),
+              undefined,
+              "()"
+            ) ||
+            moment(rangeState.to).isBetween(
+              moment(item.start),
+              moment(item.end),
+              undefined,
+              "()"
+            )
+            ||
             moment(item.start).isBetween(
               moment(rangeState.from),
               moment(rangeState.to),
               undefined,
               "[)"
-            ) ||
-            moment(item.end).isBetween(
-              moment(rangeState.from),
-              moment(rangeState.to),
-              undefined,
-              "()"
             )
           );
         });
+        console.log(getRoomsFormDates)
         const openedRooms = Object.entries(roomsData).reduce(
           (a, item) => ({ ...a, [item[0]]: item[1].amount }),
           {}
         );
+        console.log(openedRooms)
         for (let j = 0; j < getRoomsFormDates.length; j++) {
           if (openedRooms[getRoomsFormDates[j].roomType] !== 0) {
             openedRooms[getRoomsFormDates[j].roomType] =

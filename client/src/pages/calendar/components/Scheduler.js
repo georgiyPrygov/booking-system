@@ -61,9 +61,7 @@ const Scheduler = ({
       })
       .format();
 
-    if (moment(start).format() < today) {
-      return false;
-    } else {
+ 
       setRange({
         start: moment(start)
           .set({
@@ -82,7 +80,7 @@ const Scheduler = ({
           })
           .format(),
       });
-    }
+    
   };
 
   const eventProps = function (event) {

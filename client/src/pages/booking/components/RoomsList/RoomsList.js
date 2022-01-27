@@ -18,7 +18,6 @@ const RoomsList = ({ availableRooms, bookingRange }) => {
       roomsArray.push({ property, value: filteredRooms[property]});
     }
   }
-  console.log(roomsArray)
 
   return (
     <>
