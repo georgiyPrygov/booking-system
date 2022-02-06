@@ -62,18 +62,15 @@ const BookingForm = ({
       { ...paymentData },
       function (response) {
         // on approved
-        console.log(response)
         setPaymentStatus('success')
       },
       function (response) {
         // on declined
-        console.log(response)
         setPaymentStatus('declined')
       },
       function (response) {
         // on pending or in processing
-        console.log(response)
-        setPaymentStatus('processing')
+        setPaymentStatus('success')
       }
     );
   };
