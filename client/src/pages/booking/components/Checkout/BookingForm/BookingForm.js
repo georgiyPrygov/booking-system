@@ -163,7 +163,7 @@ const BookingForm = ({
     const hash = createHmac("md5", secret)
       .update(string + "")
       .digest("hex");
-    setPaymentData({ ...paymentData, ...merchantSign, merchantSignature: hash });
+    setPaymentData({ ...paymentData, ...merchantSign, merchantSignature: hash, straightWidget: true });
   };
 
   useEffect(() => {
