@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import { TextField, Box, CardActions, Button } from "@mui/material";
 import moment from "moment";
@@ -10,6 +10,7 @@ import { useNavigate, useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
 import authSelectors from "../../../../../redux/auth/authSelectors";
 import snackbarOperations from "../../../../../redux/snackbar/snackbarOperations";
+import { createHmac } from "crypto";
 
 const BookingForm = ({
   addReservation,
@@ -27,6 +28,19 @@ const BookingForm = ({
   const [bookingValid, setBookingValid] = useState(null);
   const [stateBeforeSubmit, setStateBeforeSumbit] = useState(null);
   const [isConfirmed, setIsConfirmed] = useState(null);
+  const [merchantSign, setMerchantSign] = useState({
+    merchantAccount: "booking_agora_chalet_com",
+    merchantDomainName: "booking.agora-chalet.com",
+    orderReference: `BK${Date.now()}`,
+    orderDate: Math.round(Date.now()),
+    amount: `10`,
+    currency: "UAH",
+    productName: `Передплата за номер ${roomsData[id].category}`,
+    productCount: "1",
+    productPrice: "10",
+  });
+  const [paymentData, setPaymentData] = useState(null);
+  const [paymentStatus, setPaymentStatus] = useState(null);
 
   const paramsDates = {
     from: new Date(searchParams.get("checkin")),
@@ -35,7 +49,34 @@ const BookingForm = ({
 
   useEffect(() => {
     setAvailableAmount(roomsData[id].amount);
+
+    const scriptTag = document.createElement("script");
+    scriptTag.src = "https://secure.wayforpay.com/server/pay-widget.js";
+    document.body.appendChild(scriptTag);
   }, []);
+
+
+  var wayforpay = new window.Wayforpay();
+  var pay = function () {
+    wayforpay.run(
+      { ...paymentData },
+      function (response) {
+        // on approved
+        console.log(response)
+        setPaymentStatus('success')
+      },
+      function (response) {
+        // on declined
+        console.log(response)
+        setPaymentStatus('declined')
+      },
+      function (response) {
+        // on pending or in processing
+        console.log(response)
+        setPaymentStatus('processing')
+      }
+    );
+  };
 
   useEffect(() => {
     const getRoomsFormDates = reservations.filter((item) => {
@@ -54,7 +95,6 @@ const BookingForm = ({
         )
       );
     });
-    console.log(getRoomsFormDates);
     if (stateBeforeSubmit && isConfirmed === null) {
       if (
         getRoomsFormDates.length >= availableAmount &&
@@ -70,6 +110,16 @@ const BookingForm = ({
   useEffect(() => {
     if (bookingValid !== null) {
       if (bookingValid) {
+        pay()
+      } else {
+        setIsConfirmed(false);
+      }
+    }
+  }, [bookingValid]);
+
+  useEffect(() => {
+    if(paymentStatus !== null) {
+      if(paymentStatus === 'success') {
         addReservation(form);
         setIsConfirmed(true);
         setForm({
@@ -86,18 +136,20 @@ const BookingForm = ({
           guests: searchParams.get("guests"),
           paymentStatus: false,
           bookingDate: new Date(),
-          isAdmin: false
+          isAdmin: false,
         });
         setStateBeforeSumbit(null);
         setIsConfirmed(null);
         setBookingRange({ from: null, to: null });
         navigate(`${window.location.search}&success=true`);
-      } else {
-        setIsConfirmed(false);
+      }
+      if(paymentStatus === 'declined') {
+        setStateBeforeSumbit(null);
+        setIsConfirmed(null);
+        setBookingValid(null);
       }
     }
-  }, [bookingValid]);
-
+  },[paymentStatus])
 
   useEffect(() => {
     if (bookingValid !== null && isConfirmed === false) {
@@ -110,6 +162,32 @@ const BookingForm = ({
     }
   }, [bookingValid, isConfirmed]);
 
+  const hmacmd5 = (string, secret = "123456") => {
+    const hash = createHmac("md5", secret)
+      .update(string + "")
+      .digest("hex");
+    setPaymentData({ ...paymentData, ...merchantSign, merchantSignature: hash });
+  };
+
+  useEffect(() => {
+    const paymentString = Object.keys(merchantSign).reduce((acc, idx) => {
+      return Object.keys(merchantSign).indexOf(idx) ===
+        Object.keys(merchantSign).length - 1
+        ? acc + merchantSign[idx]
+        : acc + `${merchantSign[idx]};`;
+    }, "");
+    const secretKey = process.env.REACT_APP_WAYFORPAY_SECRET;
+    hmacmd5(paymentString, secretKey);
+  }, [merchantSign]);
+
+  window.addEventListener("message", function (e) {
+    if (e.data == 'WfpWidgetEventClose') {
+    setMerchantSign({...merchantSign, orderReference: `BK${Date.now()}`})
+    setStateBeforeSumbit(null);
+    setIsConfirmed(null);
+    setBookingValid(null);
+    }
+    }, false);
 
   const [form, setForm] = useState({
     name: "",
@@ -127,19 +205,23 @@ const BookingForm = ({
     guests: searchParams.get("guests"),
     nightsCount: null,
     bookingDate: new Date(),
-    notAdmin: true
+    notAdmin: true,
   });
 
   useEffect(() => {
     if (paramsDates.to !== null) {
-        const oneDay = 24 * 60 * 60 * 1000;
-  
-        const diffDays = Math.round(
-          Math.abs((paramsDates.from - paramsDates.to) / oneDay)
-        );
-        setForm({ ...form, nightsCount: diffDays, totalPrice: form.nightsCount * form.roomPrice});
-      }
-}, [form.nightsCount]);
+      const oneDay = 24 * 60 * 60 * 1000;
+
+      const diffDays = Math.round(
+        Math.abs((paramsDates.from - paramsDates.to) / oneDay)
+      );
+      setForm({
+        ...form,
+        nightsCount: diffDays,
+        totalPrice: form.nightsCount * form.roomPrice,
+      });
+    }
+  }, [form.nightsCount]);
 
   const changeHandler = (e) => {
     if (e.target.name === "name") {
@@ -148,11 +230,18 @@ const BookingForm = ({
         name: e.target.value,
         title: e.target.value,
       });
+      setPaymentData({...paymentData, clientFirstName: e.target.value, clientLastName: e.target.value})
     } else {
       setForm({ ...form, [e.target.name]: e.target.value });
     }
     if (e.target.name === "paymentStatus") {
       setForm({ ...form, paymentStatus: e.target.checked });
+    }
+    if (e.target.name === "email") {
+      setPaymentData({...paymentData, clientEmail: e.target.value})
+    }
+    if (e.target.name === "phone") {
+      setPaymentData({...paymentData, clientPhone: `38${e.target.value}`, language: 'UA'})
     }
   };
   const handleSubmit = (e) => {

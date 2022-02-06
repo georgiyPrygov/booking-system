@@ -27,9 +27,8 @@ const BookingDetails = () => {
         <div className="section-content__item">
           <div className="item-subtitle">Передплата</div>
           <div className="item-value">
-            Після підтвердження бронювання, вам потрібно оплатити передплату за
-            1 ніч проживання {`UAH ${dayPrice}`} протягом двох днів від дати
-            підтвердження.
+            Вам потрібно оплатити передплату за
+            1 ніч проживання {`UAH ${dayPrice}`} натиснувши на кнопку "До оплати".
           </div>
         </div>
         {restOfPrice !== 0 && (
@@ -37,7 +36,7 @@ const BookingDetails = () => {
             <div className="item-subtitle">Залишок оплати</div>
             <div className="item-value">
               Після передплати, залишок {`UAH ${restOfPrice} `}
-              можна буде оплатити в готелі, готівкою або переказом на картку.
+              можна буде оплатити в готелі, готівкою або переказом на рахунок чи картку.
             </div>
           </div>
         )}
