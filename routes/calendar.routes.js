@@ -9,7 +9,6 @@ const Reservation = require("../models/Reservation");
 const auth = require("./middleware/auth.middleware");
 const sgMail = require("@sendgrid/mail");
 const moment = require("moment");
-const { default: roomsData } = require("../client/src/utils/roomsData");
 
 sgMail.setApiKey(config.get("sendgridKey"));
 
@@ -57,7 +56,7 @@ router.post(
           dynamic_template_data: {
             start: moment(start).format("DD.MM.YY"),
             end: moment(end).format("DD.MM.YY"),
-            roomType : roomsData[roomType].category,
+            roomType,
             roomPrice,
             guests,
             restOfQuote : totalPrice - ( totalPrice / nightsCount ),
