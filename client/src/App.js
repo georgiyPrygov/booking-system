@@ -10,7 +10,6 @@ import SnackBar from "./components/SnackBar/SnackBar";
 
 function App({ isAuthenticated, setIsAuthenticated, setUserId }) {
   const { token, userId } = useAuth();
-  const [postMess, setPostMess] = useState();
 
   useEffect(() => {
     if (!!token && userId !== null) {
@@ -27,18 +26,16 @@ function App({ isAuthenticated, setIsAuthenticated, setUserId }) {
 
   function receiveMessage(event) {
     // Let's make sure the sender of this message is who we think it is.
-    setPostMess('got post message')
     if (event.origin !== "https://agora-chalet.com") {
-      setPostMess('wrong origin')
       return;
     }
     parentMessageEvent = event;
     sendResizeToParentWindow();
+    document.documentElement.style.overflowY = "hidden";
   }
 
   function sendResizeToParentWindow() {
     if (parentMessageEvent != undefined) {
-      setPostMess('sent to parent')
       parentMessageEvent.source.postMessage(
         JSON.stringify({
           event: "resize",
@@ -57,12 +54,10 @@ function App({ isAuthenticated, setIsAuthenticated, setUserId }) {
   // start observing a DOM node
   resizeObserver.observe(document.documentElement);
 
-
   return (
     <React.Fragment>
       <Router>
         {isAuthenticated && <Header />}
-        {postMess}
         <UseRoutes isAuthenticated={isAuthenticated} />
       </Router>
       <SnackBar />
