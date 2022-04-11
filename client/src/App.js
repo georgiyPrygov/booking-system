@@ -4,12 +4,13 @@ import { connect } from "react-redux";
 import authSelectors from "./redux/auth/authSelectors";
 import authOperations from "./redux/auth/authOperations";
 import { useAuth } from "./hooks/auth.hook";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./components/Header/Header";
 import SnackBar from "./components/SnackBar/SnackBar";
 
 function App({ isAuthenticated, setIsAuthenticated, setUserId }) {
   const { token, userId } = useAuth();
+  const [postMess, setPostMess] = useState();
 
   useEffect(() => {
     if (!!token && userId !== null) {
@@ -26,7 +27,9 @@ function App({ isAuthenticated, setIsAuthenticated, setUserId }) {
 
   function receiveMessage(event) {
     // Let's make sure the sender of this message is who we think it is.
-    if (event.origin !== "https://agora-chalet.com/") {
+    setPostMess('got post message')
+    if (event.origin !== "https://agora-chalet.com") {
+      setPostMess('wrong origin')
       return;
     }
     parentMessageEvent = event;
@@ -35,6 +38,7 @@ function App({ isAuthenticated, setIsAuthenticated, setUserId }) {
 
   function sendResizeToParentWindow() {
     if (parentMessageEvent != undefined) {
+      setPostMess('sent to parent')
       parentMessageEvent.source.postMessage(
         JSON.stringify({
           event: "resize",
@@ -58,6 +62,7 @@ function App({ isAuthenticated, setIsAuthenticated, setUserId }) {
     <React.Fragment>
       <Router>
         {isAuthenticated && <Header />}
+        {postMess}
         <UseRoutes isAuthenticated={isAuthenticated} />
       </Router>
       <SnackBar />
